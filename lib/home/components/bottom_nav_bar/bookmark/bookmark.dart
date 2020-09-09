@@ -90,75 +90,79 @@ class _FlashCardState extends State<FlashCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.0),
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(right: 20),
+    return Scaffold(
+      backgroundColor: Colors.grey.shade100,
+      appBar: AppBar(title: Text('Flashcard learning')),
+      body: Padding(
+        padding: EdgeInsets.symmetric(vertical: 5.0),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Row(
+                    children: <Widget>[
+                      Spacer(),
+                      NumberQuestion(
+                        numQuesLeft: words.length,
+                        totalNumQuest: totalWords,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 10,
+                child: AnimatedSwitcher(
+                  transitionBuilder: (child, animation) => ScaleTransition(
+                    child: child,
+                    scale: animation,
+                  ),
+                  child: flashcard,
+                  duration: const Duration(milliseconds: 500),
+                ),
+              ),
+              Expanded(
+                flex: 2,
                 child: Row(
                   children: <Widget>[
-                    Spacer(),
-                    NumberQuestion(
-                      numQuesLeft: words.length,
-                      totalNumQuest: totalWords,
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: FlatButton(
+                          padding: EdgeInsets.all(15.0),
+                          child: Icon(Icons.close, size: 30.0),
+                          textColor: Colors.white,
+                          color: Colors.red,
+                          onPressed: () {
+                            nextCard();
+                            animationFlashCard();
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: FlatButton(
+                          padding: EdgeInsets.all(15.0),
+                          child: Icon(Icons.check, size: 30.0),
+                          textColor: Colors.white,
+                          color: Colors.green,
+                          onPressed: () {
+                            rmRememberCard();
+                            animationFlashCard();
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
-            ),
-            Expanded(
-              flex: 10,
-              child: AnimatedSwitcher(
-                transitionBuilder: (child, animation) => ScaleTransition(
-                  child: child,
-                  scale: animation,
-                ),
-                child: flashcard,
-                duration: const Duration(milliseconds: 500),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: FlatButton(
-                        padding: EdgeInsets.all(15.0),
-                        child: Icon(Icons.close, size: 30.0),
-                        textColor: Colors.white,
-                        color: Colors.red,
-                        onPressed: () {
-                          nextCard();
-                          animationFlashCard();
-                        },
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: FlatButton(
-                        padding: EdgeInsets.all(15.0),
-                        child: Icon(Icons.check, size: 30.0),
-                        textColor: Colors.white,
-                        color: Colors.green,
-                        onPressed: () {
-                          rmRememberCard();
-                          animationFlashCard();
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -178,7 +182,7 @@ class _FlashCardContentState extends State<FlashCardContent> {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 20.0,
-        vertical: 50.0,
+        vertical: 20.0,
       ),
       child: FlipCard(
         front: Card(

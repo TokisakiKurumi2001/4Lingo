@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:four_lingo/home/components/body.dart';
-import 'package:four_lingo/home/components/bottom_nav_bar/bottom_nav_bar.dart';
+import 'components/body.dart';
+import 'components/bottom_nav_bar/bottom_nav_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
             Icons.add,
           ),
           onPressed: () {
-            //making flashcard screen popup
+            // this is actually for adding new words
           },
         ),
       ),
