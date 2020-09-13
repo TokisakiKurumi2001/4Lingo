@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'words.dart';
+//import 'words.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:ForLingo/global.dart' as globals;
+import 'package:ForLingo/vocab.dart';
 
 class FlashCard extends StatefulWidget {
+
   @override
   _FlashCardState createState() => _FlashCardState();
 }
 
 class _FlashCardState extends State<FlashCard> {
-  List<Words> words = [
+  /*List<Words> words = [
     Words(
       word: 'Hello',
       meaning: 'Greeting',
@@ -24,18 +27,22 @@ class _FlashCardState extends State<FlashCard> {
       meaning: 'Dart Framework',
       sentence: 'Flutter is great',
     ),
-  ];
+  ];*/
   int currWordIndex = 0;
   int totalWords = 0;
   int diffKey = 0;
   Widget flashcard;
+  List<Vocab> wordlist;
+  _FlashCardState(){
+    wordlist = List.from(globals.words);
+  }
 
   @override
   void initState() {
     super.initState();
-    totalWords = words.length;
+    totalWords = globals.length();
     flashcard = FlashCardContent(
-      currWords: words[currWordIndex],
+      currWords: wordlist[currWordIndex],
       key: ValueKey(diffKey),
     );
   }
@@ -55,7 +62,7 @@ class _FlashCardState extends State<FlashCard> {
   // this function is called when user hit "NO"
   void nextCard() {
     setState(() {
-      if (currWordIndex < words.length - 1) {
+      if (currWordIndex < wordlist.length - 1) {
         currWordIndex += 1;
       } else {
         currWordIndex = 0;
@@ -66,10 +73,10 @@ class _FlashCardState extends State<FlashCard> {
 
   // this function is called when user hit "YES"
   void rmRememberCard() {
-    words.removeAt(currWordIndex);
-    if (currWordIndex == words.length) {
+    wordlist.removeAt(currWordIndex);
+    if (currWordIndex == wordlist.length) {
       setState(() {
-        currWordIndex = words.length - 1;
+        currWordIndex = wordlist.length - 1;
       });
     }
     animationKey();
@@ -77,9 +84,9 @@ class _FlashCardState extends State<FlashCard> {
 
   void animationFlashCard() {
     setState(() {
-      if (words.length != 0) {
+      if (wordlist.length != 0) {
         flashcard = FlashCardContent(
-          currWords: words[currWordIndex],
+          currWords: wordlist[currWordIndex],
           key: ValueKey(diffKey),
         );
       } else {
@@ -106,7 +113,7 @@ class _FlashCardState extends State<FlashCard> {
                     children: <Widget>[
                       Spacer(),
                       NumberQuestion(
-                        numQuesLeft: words.length,
+                        numQuesLeft: wordlist.length,
                         totalNumQuest: totalWords,
                       ),
                     ],
@@ -170,7 +177,7 @@ class _FlashCardState extends State<FlashCard> {
 }
 
 class FlashCardContent extends StatefulWidget {
-  final Words currWords;
+  final Vocab currWords;
   const FlashCardContent({Key key, this.currWords}) : super(key: key);
   @override
   _FlashCardContentState createState() => _FlashCardContentState();
