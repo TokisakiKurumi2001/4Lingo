@@ -1,4 +1,4 @@
-class Words {
+/*class Words {
   String word;
   String meaning;
   String sentence;
@@ -8,4 +8,4 @@ class Words {
     this.meaning = meaning;
     this.sentence = sentence;
   }
-}
+}*/
