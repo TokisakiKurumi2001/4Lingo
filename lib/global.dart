@@ -1,8 +1,9 @@
 import 'vocab.dart';
-List <Vocab> words = [
-  Vocab(word:'apple',meaning: 'red fruit', sentence: 'This is an apple'),
-  Vocab(word:'mango',meaning: 'yellow fruit', sentence: 'Mango is yellow'),
-  Vocab(word:'orange',meaning: 'orange fruit', sentence: 'This is an orange'),
+
+List<Vocab> words = [
+  Vocab(word: 'apple', meaning: 'red fruit', sentence: 'This is an apple'),
+  Vocab(word: 'mango', meaning: 'yellow fruit', sentence: 'Mango is yellow'),
+  Vocab(word: 'orange', meaning: 'orange fruit', sentence: 'This is an orange'),
   Vocab(
     word: 'hello',
     meaning: 'Greeting',
@@ -13,12 +14,6 @@ List <Vocab> words = [
     meaning: 'Surroundings',
     sentence: 'World Wide Web',
   ),
-  Vocab(
-    word: 'Flutter',
-    meaning: 'Dart Framework',
-    sentence: 'Flutter is great',
-  ),
-
 ];
 /*
 void adding(Vocab w)
@@ -35,36 +30,31 @@ void adding(Vocab w)
   words.add(w);
   return;
 }*/
-void adding(Vocab w)
-{
+void adding(Vocab w) {
   words.add(w);
 }
-void delete(Vocab w)
-{
-  for(int i = 0; i < words.length; i++)
-  {
-    if(words[i].word == w.word)
-    {
+
+void delete(Vocab w) {
+  for (int i = 0; i < words.length; i++) {
+    if (words[i].word == w.word) {
       words.removeAt(i);
       return;
     }
   }
   return;
 }
-int finding(Vocab w)
-{
-  for(int i=0; i < words.length;i++)
-  {
-    if(words[i].word == w.word)
-      return i;
+
+int finding(Vocab w) {
+  for (int i = 0; i < words.length; i++) {
+    if (words[i].word == w.word) return i;
   }
   return -1;
 }
-void sorting()
-{
+
+void sorting() {
   words.sort((Vocab a, Vocab b) => ((a.word).compareTo(b.word)));
 }
-int length()
-{
+
+int length() {
   return words.length;
 }

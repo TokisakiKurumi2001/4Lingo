@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'components/body.dart';
 import 'components/bottom_nav_bar/bottom_nav_bar.dart';
+import 'components/word/add.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -12,12 +13,14 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(10.0),
         child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Adding()));
+          },
           child: Icon(
             Icons.add,
+            color: Colors.white,
           ),
-          onPressed: () {
-            // this is actually for adding new words
-          },
         ),
       ),
       drawer: Drawer(
