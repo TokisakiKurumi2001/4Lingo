@@ -1,6 +1,5 @@
+import 'package:ForLingo/home/home_page.dart';
 import 'package:flutter/material.dart';
-import 'home/home_page.dart';
-
 void main() {
   runApp(MyApp());
 }
