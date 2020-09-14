@@ -40,6 +40,7 @@ class _EditorState extends State<Editor> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
+                  // ignore: missing_required_param
                   IconButton(
                       icon: Icon(
                     Icons.navigate_before,
@@ -111,6 +112,7 @@ class _EditorState extends State<Editor> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget TextorField() {
     if (isEditing) {
       Mycontroller.text = Init;
@@ -181,6 +183,7 @@ class _BackEditorState extends State<BackEditor> {
                       Navigator.pop(context);
                     },
                   ),
+                  // ignore: missing_required_param
                   IconButton(
                     icon: Icon(
                       Icons.navigate_next,
