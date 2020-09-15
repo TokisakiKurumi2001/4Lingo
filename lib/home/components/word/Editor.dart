@@ -90,7 +90,7 @@ class _EditorState extends State<Editor> {
                   RaisedButton.icon(
                     icon: Icon(Icons.save),
                     onPressed: () {
-                      (globals.words[index]).word = Init;
+                      (globals.words[index]).word = Mycontroller.text;
                       print(Init);
                       setState(() {
                         index = index;

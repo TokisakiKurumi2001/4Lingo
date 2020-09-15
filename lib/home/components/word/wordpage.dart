@@ -45,8 +45,11 @@ class _WordState extends State<Word> {
                       });
                     },
                     movetoeditor: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Editor(w)));
+                      Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Editor(w)))
+                          .then((value) => setState(() {}));
                     },
                   ))
               .toList());

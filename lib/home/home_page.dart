@@ -3,7 +3,12 @@ import 'components/body.dart';
 import 'components/bottom_nav_bar/bottom_nav_bar.dart';
 import 'components/word/add.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +20,8 @@ class HomeScreen extends StatelessWidget {
         child: FloatingActionButton(
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Adding()));
+                    context, MaterialPageRoute(builder: (context) => Adding()))
+                .then((value) => setState(() {}));
           },
           child: Icon(
             Icons.add,
