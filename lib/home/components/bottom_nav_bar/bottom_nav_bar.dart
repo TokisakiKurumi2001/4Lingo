@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'bookmark/bookmark.dart';
+import '../word/wordpage.dart';
 
 class MyBottomNavBar extends StatelessWidget {
   const MyBottomNavBar({
@@ -34,7 +35,10 @@ class MyBottomNavBar extends StatelessWidget {
               color: Colors.blue,
             ),
             onPressed: () {
-              //Word popup
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => Word()),
+              // );
             },
           ),
           IconButton(

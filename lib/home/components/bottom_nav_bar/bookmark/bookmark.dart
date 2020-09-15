@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'words.dart';
+//import 'words.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:ForLingo/global.dart' as globals;
+import 'package:ForLingo/vocab.dart';
 
 class FlashCard extends StatefulWidget {
+
   @override
   _FlashCardState createState() => _FlashCardState();
 }
 
 class _FlashCardState extends State<FlashCard> {
-  List<Words> words = [
+  /*List<Words> words = [
     Words(
       word: 'Hello',
       meaning: 'Greeting',
@@ -24,18 +27,22 @@ class _FlashCardState extends State<FlashCard> {
       meaning: 'Dart Framework',
       sentence: 'Flutter is great',
     ),
-  ];
+  ];*/
   int currWordIndex = 0;
   int totalWords = 0;
   int diffKey = 0;
   Widget flashcard;
+  List<Vocab> wordlist;
+  _FlashCardState(){
+    wordlist = List.from(globals.words);
+  }
 
   @override
   void initState() {
     super.initState();
-    totalWords = words.length;
+    totalWords = globals.length();
     flashcard = FlashCardContent(
-      currWords: words[currWordIndex],
+      currWords: wordlist[currWordIndex],
       key: ValueKey(diffKey),
     );
   }
@@ -55,7 +62,7 @@ class _FlashCardState extends State<FlashCard> {
   // this function is called when user hit "NO"
   void nextCard() {
     setState(() {
-      if (currWordIndex < words.length - 1) {
+      if (currWordIndex < wordlist.length - 1) {
         currWordIndex += 1;
       } else {
         currWordIndex = 0;
@@ -66,10 +73,10 @@ class _FlashCardState extends State<FlashCard> {
 
   // this function is called when user hit "YES"
   void rmRememberCard() {
-    words.removeAt(currWordIndex);
-    if (currWordIndex == words.length) {
+    wordlist.removeAt(currWordIndex);
+    if (currWordIndex == wordlist.length) {
       setState(() {
-        currWordIndex = words.length - 1;
+        currWordIndex = wordlist.length - 1;
       });
     }
     animationKey();
@@ -77,9 +84,9 @@ class _FlashCardState extends State<FlashCard> {
 
   void animationFlashCard() {
     setState(() {
-      if (words.length != 0) {
+      if (wordlist.length != 0) {
         flashcard = FlashCardContent(
-          currWords: words[currWordIndex],
+          currWords: wordlist[currWordIndex],
           key: ValueKey(diffKey),
         );
       } else {
@@ -90,75 +97,79 @@ class _FlashCardState extends State<FlashCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.0),
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(right: 20),
+    return Scaffold(
+      backgroundColor: Colors.grey.shade100,
+      appBar: AppBar(title: Text('Flashcard learning')),
+      body: Padding(
+        padding: EdgeInsets.symmetric(vertical: 5.0),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Row(
+                    children: <Widget>[
+                      Spacer(),
+                      NumberQuestion(
+                        numQuesLeft: wordlist.length,
+                        totalNumQuest: totalWords,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 10,
+                child: AnimatedSwitcher(
+                  transitionBuilder: (child, animation) => ScaleTransition(
+                    child: child,
+                    scale: animation,
+                  ),
+                  child: flashcard,
+                  duration: const Duration(milliseconds: 500),
+                ),
+              ),
+              Expanded(
+                flex: 2,
                 child: Row(
                   children: <Widget>[
-                    Spacer(),
-                    NumberQuestion(
-                      numQuesLeft: words.length,
-                      totalNumQuest: totalWords,
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: FlatButton(
+                          padding: EdgeInsets.all(15.0),
+                          child: Icon(Icons.close, size: 30.0),
+                          textColor: Colors.white,
+                          color: Colors.red,
+                          onPressed: () {
+                            nextCard();
+                            animationFlashCard();
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: FlatButton(
+                          padding: EdgeInsets.all(15.0),
+                          child: Icon(Icons.check, size: 30.0),
+                          textColor: Colors.white,
+                          color: Colors.green,
+                          onPressed: () {
+                            rmRememberCard();
+                            animationFlashCard();
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
-            ),
-            Expanded(
-              flex: 10,
-              child: AnimatedSwitcher(
-                transitionBuilder: (child, animation) => ScaleTransition(
-                  child: child,
-                  scale: animation,
-                ),
-                child: flashcard,
-                duration: const Duration(milliseconds: 500),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: FlatButton(
-                        padding: EdgeInsets.all(15.0),
-                        child: Icon(Icons.close, size: 30.0),
-                        textColor: Colors.white,
-                        color: Colors.red,
-                        onPressed: () {
-                          nextCard();
-                          animationFlashCard();
-                        },
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: FlatButton(
-                        padding: EdgeInsets.all(15.0),
-                        child: Icon(Icons.check, size: 30.0),
-                        textColor: Colors.white,
-                        color: Colors.green,
-                        onPressed: () {
-                          rmRememberCard();
-                          animationFlashCard();
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -166,7 +177,7 @@ class _FlashCardState extends State<FlashCard> {
 }
 
 class FlashCardContent extends StatefulWidget {
-  final Words currWords;
+  final Vocab currWords;
   const FlashCardContent({Key key, this.currWords}) : super(key: key);
   @override
   _FlashCardContentState createState() => _FlashCardContentState();
@@ -178,7 +189,7 @@ class _FlashCardContentState extends State<FlashCardContent> {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 20.0,
-        vertical: 50.0,
+        vertical: 20.0,
       ),
       child: FlipCard(
         front: Card(

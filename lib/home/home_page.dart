@@ -1,23 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:four_lingo/home/components/body.dart';
-import 'package:four_lingo/home/components/bottom_nav_bar/bottom_nav_bar.dart';
+import 'components/body.dart';
+import 'components/body.dart';
+import 'components/bottom_nav_bar/bottom_nav_bar.dart';
+import 'components/word/add.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
-      body: Body(),
+      //appBar: buildAppBar(),
+      //body: Body(),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            centerTitle: true,
+            elevation: 0,
+            title: Text(
+              '4Lingo',
+              style: TextStyle(
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(20),
+              ),
+            ),
+          ),
+          SliverList(
+            delegate: Body(),
+          )
+        ],
+      ),
       bottomNavigationBar: MyBottomNavBar(),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(10.0),
         child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Adding()))
+                .then((value) => setState(() {}));
+          },
           child: Icon(
             Icons.add,
+            color: Colors.white,
           ),
-          onPressed: () {
-            //making flashcard screen popup
-          },
         ),
       ),
       drawer: Drawer(
@@ -68,6 +101,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  /*
   AppBar buildAppBar() {
     return AppBar(
       centerTitle: true,
@@ -81,4 +115,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+   */
 }
