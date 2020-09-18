@@ -30,7 +30,7 @@ class DataChart extends StatelessWidget {
       )
     ];
     return Container(
-      height: 500,
+      height: 300,
       width: 500,
       padding: EdgeInsets.all(20),
       child: Card(

@@ -31,17 +31,6 @@ class _MonthDataState extends State<MonthData> {
     ];
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.orange[400],
-          title: Text('Month',
-            style: TextStyle(
-              fontFamily: 'IndieFlower',
-              letterSpacing: 2.0,
-              fontSize: 25.0,
-            ),
-          ),
-          centerTitle: true,
-        ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -50,7 +39,7 @@ class _MonthDataState extends State<MonthData> {
                 padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 8),
                 child: Container(
                   margin: EdgeInsets.all(5.0),
-                  height: 150,
+                  height: 130,
                   decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(24.0),
@@ -106,7 +95,7 @@ class _MonthDataState extends State<MonthData> {
                 padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 8),
                 child: Container(
                   margin: EdgeInsets.all(5.0),
-                  height: 150,
+                  height: 130,
                   decoration: BoxDecoration(
                     color: Colors.indigo[300],
                     borderRadius: BorderRadius.circular(24.0),
@@ -156,7 +145,7 @@ class _MonthDataState extends State<MonthData> {
                   ),
                 ),
               ),
-              DataChart(dulieu1: dulieudothi1,dulieu2: dulieudothi2,name: 'Vocabs you have learned',),
+              DataChart(dulieu1: dulieudothi1,dulieu2: dulieudothi2,name: 'Yours vocabs this month',),
 
             ],
           ),

@@ -51,6 +51,27 @@ class Month {
       monthtotalvocab += mymonth[i].totalvocabs;
     }
   }
+  Month.fromMonth(int _monthtotalvocab,int _monthtotallearned)
+  {
+    monthtotalvocab=_monthtotalvocab;
+    monthtotallearned=_monthtotallearned;
+  }
+}
+class Year
+{
+  List<Month> myyear = new List(12);
+  int yeartotalvocab;
+  int yeartotallearn;
+  Year(List<Month> temp)
+  {
+    myyear = temp;
+    yeartotallearn = yeartotalvocab = 0;
+    for ( int i = 0; i < 12; i++)
+      {
+        yeartotalvocab+=temp[i].monthtotalvocab;
+        yeartotallearn+=temp[i].monthtotallearned;
+      }
+  }
 }
 // This class is used when we draw a chart
 class ChartData
