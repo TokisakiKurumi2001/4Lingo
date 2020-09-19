@@ -40,15 +40,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          SliverAppBar(
-            toolbarHeight: 80,
+          // SliverAppBar(
+          //   toolbarHeight: 80,
+          //   pinned: true,
+          //   backgroundColor: Colors.white,
+          //   automaticallyImplyLeading: false,
+          //   actions: <Widget>[
+          //     Container(),
+          //   ],
+          //   title: HeaderWithSearchBox(size: size),
+          // ),
+          SliverPersistentHeader(
             pinned: true,
-            backgroundColor: Colors.white,
-            automaticallyImplyLeading: false,
-            actions: <Widget>[
-              Container(),
-            ],
-            title: HeaderWithSearchBox(size: size),
+            delegate: PersistentHeader(
+              widget: HeaderWithSearchBox(size: size),
+            ),
           ),
           SliverList(
             delegate: SliverChildListDelegate(
@@ -126,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  /*
+/*
   AppBar buildAppBar() {
     return AppBar(
       centerTitle: true,
@@ -140,6 +146,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
    */
 }
