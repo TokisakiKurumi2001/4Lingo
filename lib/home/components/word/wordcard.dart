@@ -6,7 +6,7 @@ class WordCard extends StatelessWidget {
   final Vocab w;
   final Function delete;
   final Function movetoeditor;
-  WordCard({this.w,this.delete,this.movetoeditor});
+  WordCard({this.w, this.delete, this.movetoeditor});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -28,31 +28,38 @@ class WordCard extends StatelessWidget {
             ),
             Spacer(),
             FlatButton.icon(
-              onPressed: (){
+              onPressed: () {
                 Widget YesButton = FlatButton(
-                  child: Text('Yes'),
-                  onPressed: (){
+                  child: Text(
+                    'Yes',
+                    style: TextStyle(color: Colors.red.shade600),
+                  ),
+                  onPressed: () {
                     Navigator.pop(context);
                     delete();
                   },
                 );
                 Widget NoButton = FlatButton(
                   child: Text('No'),
-                  onPressed: (){Navigator.pop(context);},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 );
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text("Alert Dialog"),
-                        content: Text("Would you like to delete this word ?"),
-                        actions: <Widget>[YesButton,
-                          NoButton],
+                        title: Text("Delete words"),
+                        content: Text(
+                            "Are you sure you want to delete '${w.word}' ?"),
+                        actions: <Widget>[YesButton, NoButton],
                       );
-                    }
-                );
+                    });
               },
-              icon: Icon(Icons.delete),
+              icon: Icon(
+                Icons.delete,
+                color: Colors.red.shade600,
+              ),
               label: Text(''),
             ),
             FlatButton.icon(

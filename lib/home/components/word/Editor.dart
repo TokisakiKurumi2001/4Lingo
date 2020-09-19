@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../../../vocab.dart';
 import '../../../global.dart' as globals;
 
-class Editor extends StatefulWidget {
+class FrontEditor extends StatefulWidget {
   final Vocab w;
-  Editor(this.w);
+  FrontEditor(this.w);
   @override
-  _EditorState createState() => _EditorState();
+  _FrontEditorState createState() => _FrontEditorState();
 }
 
-class _EditorState extends State<Editor> {
+class _FrontEditorState extends State<FrontEditor> {
   bool isEditing = false;
   final TextEditingController Mycontroller = TextEditingController();
   String Init;
@@ -23,96 +23,6 @@ class _EditorState extends State<Editor> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('This is the place for editing'),
-        centerTitle: true,
-      ),
-      body: Builder(builder: (BuildContext context) {
-        return SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  // ignore: missing_required_param
-                  IconButton(
-                      icon: Icon(
-                    Icons.navigate_before,
-                    size: 50,
-                    color: Colors.grey[400],
-                  )),
-                  IconButton(
-                    icon: Icon(
-                      Icons.navigate_next,
-                      size: 50,
-                      color: Colors.grey[400],
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BackEditor(index)));
-                    },
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Container(
-                padding: EdgeInsets.all(20),
-                child: TextorField(),
-                color: Colors.white,
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  RaisedButton.icon(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      if (isEditing == true)
-                        return;
-                      else {
-                        setState(() {
-                          isEditing = true;
-                        });
-                      }
-                    },
-                    label: Text('Edit'),
-                  ),
-                  RaisedButton.icon(
-                    icon: Icon(Icons.save),
-                    onPressed: () {
-                      (globals.words[index]).word = Mycontroller.text;
-                      print(Init);
-                      setState(() {
-                        index = index;
-                        isEditing = false;
-                        Init = Mycontroller.text;
-                      });
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text('Changes saved!'),
-                      ));
-                    },
-                    label: Text('Save'),
-                  ),
-                ],
-              )
-            ],
-          ),
-        );
-      }),
-    );
-  }
-
-  // ignore: non_constant_identifier_names
   Widget TextorField() {
     if (isEditing) {
       Mycontroller.text = Init;
@@ -130,6 +40,59 @@ class _EditorState extends State<Editor> {
         ),
       );
     }
+  }
+
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          SizedBox(
+            height: 40,
+          ),
+          Container(
+            padding: EdgeInsets.all(20),
+            child: TextorField(),
+            color: Colors.white,
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              RaisedButton.icon(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  if (isEditing == true)
+                    return;
+                  else {
+                    setState(() {
+                      isEditing = true;
+                    });
+                  }
+                },
+                label: Text('Edit'),
+              ),
+              RaisedButton.icon(
+                icon: Icon(Icons.save),
+                onPressed: () {
+                  (globals.words[index]).word = Mycontroller.text;
+                  print(Init);
+                  setState(() {
+                    index = index;
+                    isEditing = false;
+                    Init = Mycontroller.text;
+                  });
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text('Changes saved!'),
+                  ));
+                },
+                label: Text('Save'),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
 
@@ -162,37 +125,13 @@ class _BackEditorState extends State<BackEditor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      // ),
       body: Builder(
         builder: (BuildContext context) => SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.navigate_before,
-                      size: 50,
-                      color: Colors.grey[400],
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  // ignore: missing_required_param
-                  IconButton(
-                    icon: Icon(
-                      Icons.navigate_next,
-                      size: 50,
-                      color: Colors.grey[400],
-                    ),
-                  )
-                ],
-              ),
               SizedBox(
                 height: 40,
               ),
@@ -287,5 +226,54 @@ class _BackEditorState extends State<BackEditor> {
         ),
       );
     }
+  }
+}
+
+class Editor extends StatefulWidget {
+  final Vocab w;
+  Editor(this.w);
+
+  @override
+  _EditorState createState() => _EditorState();
+}
+
+class _EditorState extends State<Editor> {
+  int index;
+
+  @override
+  void initState() {
+    super.initState();
+    index = globals.finding(widget.w);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  text: 'Front',
+                ),
+                Tab(
+                  text: 'Back',
+                ),
+              ],
+            ),
+            title: Text('Edit Card'),
+            centerTitle: true,
+          ),
+          body: TabBarView(
+            children: [
+              FrontEditor(widget.w),
+              BackEditor(index),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
