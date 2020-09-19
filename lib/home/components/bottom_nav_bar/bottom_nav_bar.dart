@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'bookmark/bookmark.dart';
+import 'bookmark/statics.dart';
 
 class MyBottomNavBar extends StatelessWidget {
   const MyBottomNavBar({
@@ -58,6 +59,12 @@ class MyBottomNavBar extends StatelessWidget {
               color: Colors.blue,
             ),
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Thongke(),
+                ),
+              );
               //Statistic popup
             },
           ),
