@@ -155,6 +155,11 @@ class _AddingState extends State<Adding> {
                                     sentence: controller3.text);
                                 globals.adding(nw);
                                 print('New word added!');
+                                setState(() {
+                                  controller1.clear();
+                                  controller2.clear();
+                                  controller3.clear();
+                                });
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                   content: Text('New word added'),
                                 ));
