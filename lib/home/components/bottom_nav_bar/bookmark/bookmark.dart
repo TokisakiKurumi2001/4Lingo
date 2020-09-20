@@ -5,35 +5,17 @@ import 'package:ForLingo/global.dart' as globals;
 import 'package:ForLingo/vocab.dart';
 
 class FlashCard extends StatefulWidget {
-
   @override
   _FlashCardState createState() => _FlashCardState();
 }
 
 class _FlashCardState extends State<FlashCard> {
-  /*List<Words> words = [
-    Words(
-      word: 'Hello',
-      meaning: 'Greeting',
-      sentence: 'Hello World',
-    ),
-    Words(
-      word: 'World',
-      meaning: 'Surroundings',
-      sentence: 'World Wide Web',
-    ),
-    Words(
-      word: 'Flutter',
-      meaning: 'Dart Framework',
-      sentence: 'Flutter is great',
-    ),
-  ];*/
   int currWordIndex = 0;
   int totalWords = 0;
   int diffKey = 0;
   Widget flashcard;
   List<Vocab> wordlist;
-  _FlashCardState(){
+  _FlashCardState() {
     wordlist = List.from(globals.words);
   }
 
@@ -41,10 +23,15 @@ class _FlashCardState extends State<FlashCard> {
   void initState() {
     super.initState();
     totalWords = globals.length();
-    flashcard = FlashCardContent(
-      currWords: wordlist[currWordIndex],
-      key: ValueKey(diffKey),
-    );
+    if (totalWords != 0) {
+      // this mean that user have some words to learn
+      flashcard = FlashCardContent(
+        currWords: wordlist[currWordIndex],
+        key: ValueKey(diffKey),
+      );
+    } else {
+      flashcard = Text('Please add some words');
+    }
   }
 
   // this function is called to change the diffKey so that
@@ -99,16 +86,15 @@ class _FlashCardState extends State<FlashCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      appBar: AppBar(  backgroundColor: Colors.blue[300],
+      appBar: AppBar(
+        backgroundColor: Colors.blue[300],
         title: Text(
           'Flashcards learning',
           style: TextStyle(
-            fontFamily: 'QuickSand',
-            letterSpacing: 1.0,
-            fontSize: 25.0
-          ),
+              fontFamily: 'QuickSand', letterSpacing: 1.0, fontSize: 25.0),
         ),
-        centerTitle: true,),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 5.0),
         child: Container(
@@ -252,16 +238,22 @@ class NumberQuestion extends StatefulWidget {
 class _NumberQuestionState extends State<NumberQuestion> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.center,
-      children: <Widget>[
-        CircularProgressIndicator(
-          value: widget.numQuesLeft / widget.totalNumQuest,
-          backgroundColor: Colors.grey.shade700,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[200]),
-        ),
-        Text('${widget.numQuesLeft}'),
-      ],
-    );
+    if (widget.totalNumQuest != 0) {
+      // if user have some words, display circular progress bar
+      // else, return empty SizedBox(which display nothing)
+      return Stack(
+        alignment: AlignmentDirectional.center,
+        children: <Widget>[
+          CircularProgressIndicator(
+            value: widget.numQuesLeft / widget.totalNumQuest,
+            backgroundColor: Colors.grey.shade700,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[200]),
+          ),
+          Text('${widget.numQuesLeft}'),
+        ],
+      );
+    } else {
+      return SizedBox();
+    }
   }
 }
