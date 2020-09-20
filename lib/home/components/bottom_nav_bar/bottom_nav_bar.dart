@@ -35,7 +35,10 @@ class MyBottomNavBar extends StatelessWidget {
               color: Colors.blue,
             ),
             onPressed: () {
-              //Word popup
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => Word()),
+              // );
             },
           ),
           IconButton(

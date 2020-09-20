@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'header_with_searchbox.dart';
+import 'word/wordpage.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -10,6 +11,13 @@ class Body extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           HeaderWithSearchBox(size: size),
+          /*Center(
+            child: Text(
+              'data',
+              style: TextStyle(fontSize: 40),
+            ),
+          ),*/
+          Word(),
         ],
       ),
     );
