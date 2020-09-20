@@ -27,20 +27,8 @@ class MyBottomNavBar extends StatelessWidget {
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          IconButton(
-            icon: Icon(
-              FontAwesome5.file_word,
-              color: Colors.blue,
-            ),
-            onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => Word()),
-              // );
-            },
-          ),
           IconButton(
             icon: Icon(
               FontAwesome5.bookmark,
