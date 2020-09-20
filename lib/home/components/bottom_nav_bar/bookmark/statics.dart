@@ -21,50 +21,49 @@ class _ThongkeState extends State<Thongke> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      child: SafeArea(
-        child: Scaffold(
-            resizeToAvoidBottomPadding: false,
-            appBar: AppBar(
-              backgroundColor: Colors.blue[300],
-              flexibleSpace: TabBar(
-                tabs: [
-                  Tab(
-                    child: Text(
-                      'Week',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                          fontFamily: 'QuickSand',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
+      child: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          appBar: AppBar(
+            title: Text('Statistics'),
+            backgroundColor: Colors.blue[300],
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  child: Text(
+                    'Week',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                        fontFamily: 'QuickSand',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
                   ),
-                  Tab(
-                    child: Text(
-                      'Month',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'QuickSand',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
+                ),
+                Tab(
+                  child: Text(
+                    'Month',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'QuickSand',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
                   ),
-                  Tab(
-                    child: Text(
-                      'Year',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'QuickSand',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
+                ),
+                Tab(
+                  child: Text(
+                    'Year',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'QuickSand',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            body: TabBarView(
-              children: [WeekData(), MonthData(), YearData()],
-            )),
-      ),
+          ),
+          body: TabBarView(
+            children: [WeekData(), MonthData(), YearData()],
+          )),
     );
   }
 }
