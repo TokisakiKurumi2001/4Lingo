@@ -1,18 +1,6 @@
 import 'package:charts_flutter/flutter.dart' as dothi;
 import 'package:flutter/material.dart';
 
-class Words {
-  String word;
-  String meaning;
-  String sentence;
-
-  Words({String word, String meaning, String sentence}) {
-    this.word = word;
-    this.meaning = meaning;
-    this.sentence = sentence;
-  }
-}
-
 class Day {
   // Number of vocabs you wish to remember
   int vocabs;
