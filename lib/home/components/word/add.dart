@@ -1,6 +1,10 @@
+import 'package:ForLingo/db/interact_with_db.dart';
+import 'package:ForLingo/vocabs_interface.dart' as vs;
 import 'package:flutter/material.dart';
-import '../../../vocab.dart';
+import 'package:ForLingo/models/vocab.dart';
 import '../../../global.dart' as globals;
+import 'package:ForLingo/vocabs_interface.dart';
+import 'package:intl/intl.dart';
 
 class Adding extends StatefulWidget {
   @override
@@ -23,6 +27,28 @@ class _AddingState extends State<Adding> {
     controller2.dispose();
     controller3.dispose();
     super.dispose();
+  }
+  void DialogShowing(BuildContext context)
+  {
+    Widget OK = FlatButton(
+      child: Text('OK'),
+      onPressed: (){Navigator.pop(context);},
+    );
+    showDialog(context: context,builder: (context) => AlertDialog(
+      title: Text('This word has exists!'),
+      actions: <Widget>[OK],
+    ));
+
+  }
+  Future<bool> checkExistence(String val) async
+  {
+    List<Vocab> list = await DBInteract.getAllVocabs();
+    for(final node in list)
+      {
+        if(node.word == val)
+          return true;
+      }
+    return false;
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -55,15 +81,8 @@ class _AddingState extends State<Adding> {
                       validator: (value) {
                         if (value.isEmpty)
                           return 'This field is required';
-                        else {
-                          for (int i = 0; i < (globals.words).length; i++) {
-                            if ((globals.words)[i].word == value) {
-                              return 'This word has exist';
-                            }
-                          }
                           return null;
-                        }
-                      },
+                        },
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.red),
@@ -147,24 +166,31 @@ class _AddingState extends State<Adding> {
                           child: RaisedButton.icon(
                             icon: Icon(Icons.save),
                             label: Text('Save result'),
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                Vocab nw = Vocab(
-                                    word: controller1.text,
-                                    meaning: controller2.text,
-                                    sentence: controller3.text);
-                                globals.adding(nw);
-                                print('New word added!');
-                                setState(() {
-                                  controller1.clear();
-                                  controller2.clear();
-                                  controller3.clear();
-                                });
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text('New word added'),
-                                ));
+                                bool check = await checkExistence(
+                                    controller1.text);
+                                if (check == true) {
+                                  print('True');
+                                  DialogShowing(context);
+                                }
+                                else {
+                                  Vocab nw = Vocab(
+                                      word: controller1.text,
+                                      meaning: controller2.text,
+                                      sentence: controller3.text);
+                                  createTodo(nw);
+                                  setState(() {
+                                    controller1.clear();
+                                    controller2.clear();
+                                    controller3.clear();
+                                  });
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text('New word added'),
+                                  ));
+                                } //end else
                               }
-                              //end else
+
                             },
                           ),
                         ),

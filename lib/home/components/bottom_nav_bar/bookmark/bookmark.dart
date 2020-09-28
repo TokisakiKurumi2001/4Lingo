@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'words.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:ForLingo/global.dart' as globals;
-import 'package:ForLingo/vocab.dart';
+import 'package:ForLingo/models/vocab.dart';
+import 'package:ForLingo/db/interact_with_db.dart' ;
 
 class FlashCard extends StatefulWidget {
   @override
@@ -14,15 +14,16 @@ class _FlashCardState extends State<FlashCard> {
   int totalWords = 0;
   int diffKey = 0;
   Widget flashcard;
-  List<Vocab> wordlist;
-  _FlashCardState() {
-    wordlist = List.from(globals.words);
+  List<Vocab> wordlist = List();
+  void _loadData() async {
+    wordlist = await DBInteract.getAllVocabs(isSorted: false);
   }
-
   @override
   void initState() {
     super.initState();
-    totalWords = globals.length();
+    _loadData();
+    print(wordlist);
+    totalWords = wordlist.length;
     if (totalWords != 0) {
       // this mean that user have some words to learn
       flashcard = FlashCardContent(

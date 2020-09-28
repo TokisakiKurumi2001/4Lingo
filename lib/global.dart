@@ -1,20 +1,21 @@
-import 'vocab.dart';
+import 'package:ForLingo/models/vocab.dart';
 
-List<Vocab> words = [
-  // Vocab(word: 'apple', meaning: 'red fruit', sentence: 'This is an apple'),
-  // Vocab(word: 'mango', meaning: 'yellow fruit', sentence: 'Mango is yellow'),
-  // Vocab(word: 'orange', meaning: 'orange fruit', sentence: 'This is an orange'),
-  // Vocab(
-  //   word: 'hello',
-  //   meaning: 'Greeting',
-  //   sentence: 'Hello World',
-  // ),
-  // Vocab(
-  //   word: 'world',
-  //   meaning: 'Surroundings',
-  //   sentence: 'World Wide Web',
-  // ),
-];
+List<Vocab> words;
+//List<Vocab> words = [
+//   Vocab(word: 'apple', meaning: 'red fruit', sentence: 'This is an apple'),
+//   Vocab(word: 'mango', meaning: 'yellow fruit', sentence: 'Mango is yellow'),
+//   Vocab(word: 'orange', meaning: 'orange fruit', sentence: 'This is an orange'),
+//   Vocab(
+//     word: 'hello',
+//     meaning: 'Greeting',
+//     sentence: 'Hello World',
+//   ),
+//   Vocab(
+//     word: 'world',
+//     meaning: 'Surroundings',
+//     sentence: 'World Wide Web',
+//   ),
+//];
 /*
 void adding(Vocab w)
 {
