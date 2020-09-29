@@ -47,7 +47,7 @@ class DatabaseCreator {
       $meaning TEXT,
       $sentence TEXT
       $createdAt TEXT,
-      $updatedAt TEXT,
+      $updatedAt TEXT
     )
     ''';
     await db.execute(sql);
