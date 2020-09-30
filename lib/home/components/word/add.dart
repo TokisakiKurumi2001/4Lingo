@@ -1,6 +1,7 @@
+import 'package:ForLingo/db/interact_with_db.dart';
+import 'package:ForLingo/models/vocab.dart';
 import 'package:flutter/material.dart';
-import '../../../vocab.dart';
-import '../../../global.dart' as globals;
+//import '../../../global.dart' as globals; // It seem likes we do not need this anymore
 
 class Adding extends StatefulWidget {
   @override
@@ -52,17 +53,12 @@ class _AddingState extends State<Adding> {
                     margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
                     child: TextFormField(
                       style: TextStyle(fontWeight: FontWeight.w600),
-                      validator: (value) {
+                      validator: (value)
+                      {
                         if (value.isEmpty)
-                          return 'This field is required';
-                        else {
-                          for (int i = 0; i < (globals.words).length; i++) {
-                            if ((globals.words)[i].word == value) {
-                              return 'This word has exist';
-                            }
-                          }
-                          return null;
-                        }
+                             {
+                               return 'This field is required';
+                             }
                       },
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -147,13 +143,18 @@ class _AddingState extends State<Adding> {
                           child: RaisedButton.icon(
                             icon: Icon(Icons.save),
                             label: Text('Save result'),
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) { // I have to edit here
                                 Vocab nw = Vocab(
                                     word: controller1.text,
                                     meaning: controller2.text,
-                                    sentence: controller3.text);
-                                globals.adding(nw);
+                                    sentence: controller3.text,
+                                    id: await DBInteract.vocabsCount(),
+                                  date_created: DateTime.now().toString(),
+                                  data_updated: DateTime.now().toString()
+                                );
+                                //globals.adding(nw);
+                                DBInteract.addNewVocab(nw);
                                 print('New word added!');
                                 setState(() {
                                   controller1.clear();

@@ -1,6 +1,7 @@
+import 'package:ForLingo/models/vocab.dart';
 import 'package:flutter/material.dart';
-import 'package:ForLingo/vocab.dart';
-import 'package:ForLingo/global.dart' as globals;
+//import 'package:ForLingo/vocab.dart';
+//import 'package:ForLingo/global.dart' as globals;
 
 class WordCard extends StatelessWidget {
   final Vocab w;

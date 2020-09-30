@@ -1,6 +1,6 @@
+import 'package:ForLingo/db/interact_with_db.dart';
+import 'package:ForLingo/models/vocab.dart';
 import 'package:flutter/material.dart';
-import '../../../vocab.dart';
-import '../../../global.dart' as globals;
 
 class FrontEditor extends StatefulWidget {
   final Vocab w;
@@ -15,9 +15,10 @@ class _FrontEditorState extends State<FrontEditor> {
   String Init;
   int index;
   @override
-  void initState() {
+  void initState() async {
     super.initState();
-    index = globals.finding(widget.w);
+    //index = globals.finding(widget.w);
+    index = await DBInteract.finding(widget.w);
     Mycontroller.text = (widget.w).word;
     Init = (widget.w).word;
   }
@@ -75,7 +76,15 @@ class _FrontEditorState extends State<FrontEditor> {
               RaisedButton.icon(
                 icon: Icon(Icons.save),
                 onPressed: () {
-                  (globals.words[index]).word = Mycontroller.text;
+                  // (globals.words[index]).word = Mycontroller.text;
+
+                  Vocab temp = Vocab(
+                      id: index,
+                      data_updated: null,
+                      date_created: null,
+                      word: Mycontroller.text,
+                      meaning: null);
+                  DBInteract.updateVocab(temp);
                   print(Init);
                   setState(() {
                     index = index;
@@ -108,11 +117,19 @@ class _BackEditorState extends State<BackEditor> {
   TextEditingController meaningcontroller = TextEditingController();
   TextEditingController sentencecontroller = TextEditingController();
   @override
-  void initState() {
+  void initState() async {
     super.initState();
     isEditing = false;
-    meaningcontroller.text = (globals.words[widget.index]).meaning;
-    sentencecontroller.text = (globals.words[widget.index]).sentence;
+    //meaningcontroller.text = (globals.words[widget.index]).meaning;
+    //sentencecontroller.text = (globals.words[widget.index]).sentence;
+    Vocab temp = Vocab(
+        id: widget.index,
+        data_updated: null,
+        date_created: null,
+        meaning: null,
+        sentence: null);
+    meaningcontroller.text = await DBInteract.selectMeaning(temp);
+    sentencecontroller.text = await DBInteract.selectMeaning(temp);
   }
 
   @override
@@ -175,11 +192,14 @@ class _BackEditorState extends State<BackEditor> {
                   ),
                   RaisedButton.icon(
                     icon: Icon(Icons.save),
-                    onPressed: () {
-                      (globals.words)[widget.index].meaning =
-                          meaningcontroller.text;
-                      (globals.words)[widget.index].sentence =
-                          sentencecontroller.text;
+                    onPressed: () async {
+                      // (globals.words)[widget.index].meaning =
+                      //     meaningcontroller.text;
+                      // (globals.words)[widget.index].sentence =
+                      //     sentencecontroller.text;
+                      Vocab temp = await DBInteract.getVocab(widget.index);
+                      temp.meaning = meaningcontroller.text;
+                      temp.sentence = meaningcontroller.text;
                       setState(() {
                         isEditing = false;
                       });
@@ -241,9 +261,10 @@ class _EditorState extends State<Editor> {
   int index;
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
-    index = globals.finding(widget.w);
+    //index = globals.finding(widget.w);
+    index = await DBInteract.finding(widget.w);
   }
 
   @override

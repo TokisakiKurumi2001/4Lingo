@@ -19,11 +19,13 @@ class DatabaseCreator {
   static const word = 'word';
   static const meaning = 'meaning';
   static const sentence = 'sentence';
-
+  static const date_created = 'date_created';
+  static const date_updated = 'date_updated';
   static void databaseLog(String functionName, String sql,
       [List<Map<String, dynamic>> selectQueryResult,
       int insertAndUpdateResult,
-      List<dynamic> params]) {
+      List<dynamic> params])
+  {
     print(functionName);
     print(sql);
     if (params != null) {
@@ -42,6 +44,10 @@ class DatabaseCreator {
     CREATE TABLE IF NOT EXISTS $tableName (
       $id INTEGER PRIMARY KEY,
       $word TEXT NOT NULL,
+      $meaning TEXT NOT NULL,
+      $sentence TEXT NOT NULL,
+      $date_created TEXT NOT NULL,
+      $date_updated TEXT NOT NULL,
     )
     ''';
     await db.execute(sql);
@@ -50,7 +56,7 @@ class DatabaseCreator {
   Future<String> getDBPath(String dbName) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, dbName);
-
+    //check if the folder exists
     if (await Directory(dirname(path)).exists()) {
       //await deleteDatabase(path);
     } else {
@@ -62,6 +68,7 @@ class DatabaseCreator {
 
   Future<void> initDB() async {
     final path = await getDBPath('lingo');
+    // The table name is lingo
     db = await openDatabase(path, version: 1, onCreate: onCreate);
     print(db);
   }
