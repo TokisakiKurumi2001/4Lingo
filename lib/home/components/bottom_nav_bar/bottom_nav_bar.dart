@@ -39,7 +39,7 @@ class MyBottomNavBar extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => FlashCard(),
+                  builder: (context) => FlashCardFuture(),
                 ),
               );
             },
