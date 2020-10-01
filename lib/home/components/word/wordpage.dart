@@ -7,7 +7,6 @@ import 'package:ForLingo/db/database_creator.dart';
 import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:ForLingo/vocabs_interface.dart' as vs;
 
-
 class Word extends StatefulWidget {
   final Function sethomestate;
   Word({this.sethomestate});
@@ -25,7 +24,7 @@ class _WordState extends State<Word> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //child: showingList(),
+        //child: showingList(),
         child: FutureBuilder<List<Vocab>>(
             future: vs.future,
             builder: (context, snapshot) {
@@ -41,35 +40,31 @@ class _WordState extends State<Word> {
                   );
                 }
                 return Column(
-                    children: snapshot.data.map((w) =>
-                        WordCard(
-                          w: w,
-                          delete: () {
-                            vs.deleteTodo(w);
-                            widget.sethomestate();
-                          },
-                          movetoeditor: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Editor(w)))
-                                .then((value) =>
-                                setState(() {
-                                  //vs.future = DBInteract.getAllVocabs();
-                                  widget.sethomestate();
-                                  vs.handleSearch = true;
-                                })
-                            );
-                          },
-                        )).toList()
-                );
+                    children: snapshot.data
+                        .map((w) => WordCard(
+                              w: w,
+                              delete: () {
+                                vs.deleteTodo(w);
+                                widget.sethomestate();
+                              },
+                              movetoeditor: () {
+                                FocusManager.instance.primaryFocus.unfocus();
+                                Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Editor(w)))
+                                    .then((value) => setState(() {
+                                          //vs.future = DBInteract.getAllVocabs();
+                                          widget.sethomestate();
+                                          vs.handleSearch = true;
+                                        }));
+                              },
+                            ))
+                        .toList());
               }
-              return Center(child: Text('loading...'),);
-            }
-        )
-    );
+              return Center(
+                child: Text('loading...'),
+              );
+            }));
   }
-
 }
-
-
