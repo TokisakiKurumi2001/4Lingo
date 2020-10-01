@@ -2,11 +2,13 @@ import '../models/vocab.dart';
 import 'database_creator.dart';
 
 class DBInteract {
-  static Future<List<Vocab>> getAllVocabs() async {
+  static Future<List<Vocab>> getAllVocabs({bool isSorted = true}) async {
     final sql = '''
     SELECT * FROM ${DatabaseCreator.tableName}
     ''';
-    final data = await db.rawQuery(sql);
+    final sq2 = sql + ' ORDER BY ${DatabaseCreator.word} ASC';
+    final data =
+        (isSorted == true) ? await db.rawQuery(sq2) : await db.rawQuery(sql);
     List<Vocab> vocabs = List();
 
     for (final node in data) {
@@ -17,6 +19,18 @@ class DBInteract {
     return vocabs;
   }
 
+//  static Future<bool> checkExistence(String word) async
+//  {
+//      final sql = '''
+//    SELECT * FROM ${DatabaseCreator.tableName} where EXISTS(SELECT * FROM ${DatabaseCreator.tableName}
+//    WHERE ${DatabaseCreator.word} = $word)
+//    ''';
+//      final data = await db.query(sql);
+//      if (data.isEmpty)
+//        return false;
+//      return true;
+//
+//  }
   static Future<Vocab> getVocab(int id) async {
     final sql = '''
     SELECT * FROM ${DatabaseCreator.tableName}
@@ -28,15 +42,42 @@ class DBInteract {
     return vocab;
   }
 
+  static Future<List<Vocab>> getPattern(String query) async {
+    final sq1 = '''
+        SELECT * FROM ${DatabaseCreator.tableName}
+        WHERE ${DatabaseCreator.word} LIKE '$query%'
+        ORDER BY ${DatabaseCreator.word} ASC
+    ''';
+
+    final data = await db.rawQuery(sq1);
+    List<Vocab> vocabs = List();
+    for (final node in data) {
+      final todo = Vocab.fromJson(node);
+      vocabs.add(todo);
+    }
+    return vocabs;
+  }
+
   static Future<void> addNewVocab(Vocab myVocab) async {
     final sql = '''
     INSERT INTO ${DatabaseCreator.tableName} (
       ${DatabaseCreator.id},
-      ${DatabaseCreator.word}
+      ${DatabaseCreator.word},
+      ${DatabaseCreator.meaning},
+      ${DatabaseCreator.sentence},
+      ${DatabaseCreator.createdAt},
+      ${DatabaseCreator.updatedAt}
     ) VALUES
-    (?,?)
+    (?,?,?,?,?,?)
     ''';
-    List<dynamic> params = [myVocab.id, myVocab.word];
+    List<dynamic> params = [
+      myVocab.id,
+      myVocab.word,
+      myVocab.meaning,
+      myVocab.sentence,
+      myVocab.createdAt,
+      myVocab.updatedAt
+    ];
     final result = await db.rawInsert(sql, params);
     DatabaseCreator.databaseLog('Add new vocab', sql, null, result, params);
   }
@@ -54,10 +95,16 @@ class DBInteract {
   static Future<void> updateVocab(Vocab newVocab) async {
     final sql = '''
     UPDATE ${DatabaseCreator.tableName}
-    SET ${DatabaseCreator.word} = ?
+    SET ${DatabaseCreator.word} = ?, ${DatabaseCreator.meaning} = ?, ${DatabaseCreator.sentence} = ?, ${DatabaseCreator.updatedAt} = ?
     WHERE ${DatabaseCreator.id} = ?
     ''';
-    List<dynamic> params = [newVocab.word, newVocab.id];
+    List<dynamic> params = [
+      newVocab.word,
+      newVocab.meaning,
+      newVocab.sentence,
+      newVocab.updatedAt,
+      newVocab.id
+    ];
     final result = await db.rawUpdate(sql, params);
     DatabaseCreator.databaseLog('Update vocab', sql, null, result, params);
   }
@@ -71,3 +118,13 @@ class DBInteract {
     return idForNewItem;
   }
 }
+
+//static Future<Vocab> getVocabfromString(String s) async {
+//final sql = '''
+//    SELECT * FROM ${DatabaseCreator.tableName}
+//    WHERE ${DatabaseCreator.word} = '${s}'
+//    ''';
+//final data = await db.rawQuery(sql);
+//final vocab = Vocab.fromJson(data[0]);
+//return vocab;
+//}

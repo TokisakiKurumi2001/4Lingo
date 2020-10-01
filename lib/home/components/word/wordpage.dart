@@ -1,58 +1,75 @@
 import 'package:flutter/material.dart';
 import 'wordcard.dart';
-import '../../../vocab.dart';
+import 'package:ForLingo/models/vocab.dart';
 import '../../../global.dart' as globals;
 import 'Editor.dart';
+import 'package:ForLingo/db/database_creator.dart';
+import 'package:ForLingo/db/interact_with_db.dart';
+import 'package:ForLingo/vocabs_interface.dart' as vs;
+
 
 class Word extends StatefulWidget {
+  final Function sethomestate;
+  Word({this.sethomestate});
   @override
   _WordState createState() => _WordState();
 }
 
 class _WordState extends State<Word> {
   @override
+  void initState() {
+    super.initState();
+    //vs.future = DBInteract.getAllVocabs();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      child: showingList(),
+      //child: showingList(),
+        child: FutureBuilder<List<Vocab>>(
+            future: vs.future,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data.length == 0) {
+                  return Center(
+                    child: Text(
+                      "You have no word. Press the button to add new words.",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  );
+                }
+                return Column(
+                    children: snapshot.data.map((w) =>
+                        WordCard(
+                          w: w,
+                          delete: () {
+                            vs.deleteTodo(w);
+                            widget.sethomestate();
+                          },
+                          movetoeditor: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Editor(w)))
+                                .then((value) =>
+                                setState(() {
+                                  //vs.future = DBInteract.getAllVocabs();
+                                  widget.sethomestate();
+                                  vs.handleSearch = true;
+                                })
+                            );
+                          },
+                        )).toList()
+                );
+              }
+              return Center(child: Text('loading...'),);
+            }
+        )
     );
   }
 
-  Widget showingList() {
-    if ((globals.words).length == 0)
-      return Center(
-        child: Text(
-          "You have no word. Press the button to add new words.",
-          style: TextStyle(
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-      );
-    else {
-      List<Vocab> displayList = List.from(globals.words);
-      displayList.sort((Vocab a, Vocab b) => ((a.word).compareTo(b.word)));
-      for (int i = 0; i < displayList.length; i++) {
-        print(displayList[i].word);
-      }
-      return ListView(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          children: displayList
-              .map((w) => WordCard(
-                    w: w,
-                    delete: () {
-                      setState(() {
-                        globals.delete(w);
-                      });
-                    },
-                    movetoeditor: () {
-                      Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Editor(w)))
-                          .then((value) => setState(() {}));
-                    },
-                  ))
-              .toList());
-    }
-  }
 }
+
+

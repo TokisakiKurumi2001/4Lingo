@@ -1,6 +1,8 @@
+import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:flutter/material.dart';
-import '../../../vocab.dart';
+import 'package:ForLingo/models/vocab.dart';
 import '../../../global.dart' as globals;
+import 'package:ForLingo/vocabs_interface.dart';
 
 class FrontEditor extends StatefulWidget {
   final Vocab w;
@@ -13,13 +15,12 @@ class _FrontEditorState extends State<FrontEditor> {
   bool isEditing = false;
   final TextEditingController Mycontroller = TextEditingController();
   String Init;
-  int index;
   @override
   void initState() {
     super.initState();
-    index = globals.finding(widget.w);
-    Mycontroller.text = (widget.w).word;
-    Init = (widget.w).word;
+    //index = globals.finding(widget.w);
+    Mycontroller.text = widget.w.word;
+    Init = widget.w.word;
   }
 
   @override
@@ -27,7 +28,7 @@ class _FrontEditorState extends State<FrontEditor> {
     if (isEditing) {
       Mycontroller.text = Init;
       isEditing = false;
-      return TextField(
+      return TextFormField(
         autofocus: true,
         controller: Mycontroller,
       );
@@ -42,7 +43,8 @@ class _FrontEditorState extends State<FrontEditor> {
     }
   }
 
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
+
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -75,10 +77,12 @@ class _FrontEditorState extends State<FrontEditor> {
               RaisedButton.icon(
                 icon: Icon(Icons.save),
                 onPressed: () {
-                  (globals.words[index]).word = Mycontroller.text;
-                  print(Init);
-                  setState(() {
-                    index = index;
+                  //(globals.words[index]).word = Mycontroller.text;
+                  widget.w.word = Mycontroller.text;
+                  updateTodo(widget.w);
+                  //print(Init);
+                  setState(()  {
+                    //index = index;
                     isEditing = false;
                     Init = Mycontroller.text;
                   });
@@ -97,8 +101,8 @@ class _FrontEditorState extends State<FrontEditor> {
 }
 
 class BackEditor extends StatefulWidget {
-  final int index;
-  BackEditor(this.index);
+  final Vocab w;
+  BackEditor(this.w);
   @override
   _BackEditorState createState() => _BackEditorState();
 }
@@ -107,12 +111,15 @@ class _BackEditorState extends State<BackEditor> {
   bool isEditing;
   TextEditingController meaningcontroller = TextEditingController();
   TextEditingController sentencecontroller = TextEditingController();
+  //Vocab w;
   @override
   void initState() {
+    print('Init state of back editor ${widget.w.meaning}--${widget.w.sentence}');
     super.initState();
     isEditing = false;
-    meaningcontroller.text = (globals.words[widget.index]).meaning;
-    sentencecontroller.text = (globals.words[widget.index]).sentence;
+    //w = await DBInteract.getVocab(widget.index);
+    meaningcontroller.text = widget.w.meaning;
+    sentencecontroller.text = widget.w.sentence;
   }
 
   @override
@@ -176,11 +183,15 @@ class _BackEditorState extends State<BackEditor> {
                   RaisedButton.icon(
                     icon: Icon(Icons.save),
                     onPressed: () {
-                      (globals.words)[widget.index].meaning =
-                          meaningcontroller.text;
-                      (globals.words)[widget.index].sentence =
-                          sentencecontroller.text;
-                      setState(() {
+                      //(globals.words)[widget.index].meaning =
+                      //    meaningcontroller.text;
+                      //(globals.words)[widget.index].sentence =
+                      //    sentencecontroller.text;
+                      widget.w.meaning = meaningcontroller.text;
+                      widget.w.sentence = sentencecontroller.text;
+                      updateTodo(widget.w);
+                      setState(()  {
+                        //w = await DBInteract.getVocab(widget.index);
                         isEditing = false;
                       });
                       Scaffold.of(context).showSnackBar(SnackBar(
@@ -238,16 +249,11 @@ class Editor extends StatefulWidget {
 }
 
 class _EditorState extends State<Editor> {
-  int index;
 
-  @override
-  void initState() {
-    super.initState();
-    index = globals.finding(widget.w);
-  }
 
   @override
   Widget build(BuildContext context) {
+    print('Back to Editor');
     return Scaffold(
       body: DefaultTabController(
         length: 2,
@@ -269,7 +275,7 @@ class _EditorState extends State<Editor> {
           body: TabBarView(
             children: [
               FrontEditor(widget.w),
-              BackEditor(index),
+              BackEditor(widget.w),
             ],
           ),
         ),

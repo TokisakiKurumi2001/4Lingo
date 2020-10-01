@@ -19,6 +19,8 @@ class DatabaseCreator {
   static const word = 'word';
   static const meaning = 'meaning';
   static const sentence = 'sentence';
+  static const createdAt = 'createdAt';
+  static const updatedAt = 'updatedAt';
 
   static void databaseLog(String functionName, String sql,
       [List<Map<String, dynamic>> selectQueryResult,
@@ -42,6 +44,10 @@ class DatabaseCreator {
     CREATE TABLE IF NOT EXISTS $tableName (
       $id INTEGER PRIMARY KEY,
       $word TEXT NOT NULL,
+      $meaning TEXT,
+      $sentence TEXT,
+      $createdAt TEXT,
+      $updatedAt TEXT
     )
     ''';
     await db.execute(sql);

@@ -1,9 +1,11 @@
+import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:ForLingo/home/components/word/wordpage.dart';
 import 'package:flutter/material.dart';
 //import 'components/body.dart';
 import 'components/header_with_searchbox.dart';
 import 'components/bottom_nav_bar/bottom_nav_bar.dart';
 import 'components/word/add.dart';
+import 'package:ForLingo/vocabs_interface.dart'as vs;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,9 +14,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState()
+  {
+    super.initState();
+    vs.future = DBInteract.getAllVocabs();
+    print('first home state');
+  }
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      //resizeToAvoidBottomInset: false,
       //appBar: buildAppBar(),
       //body: Body(),
       body: CustomScrollView(
@@ -53,7 +63,19 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverPersistentHeader(
             pinned: true,
             delegate: PersistentHeader(
-              widget: HeaderWithSearchBox(size: size),
+              widget: HeaderWithSearchBox(size: size,sethomestate: (String val){
+                if(val == '') {
+                  setState(() {
+                    vs.future = DBInteract.getAllVocabs();
+                  });
+                }
+                else {
+                  setState(() {
+                    vs.future = DBInteract.getPattern(val);
+                  });
+                }
+                },
+              ),
             ),
           ),
           SliverList(
@@ -61,7 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
               [
                 Column(
                   children: <Widget>[
-                    Word(),
+                    Word(sethomestate: (){setState(() {
+                      vs.future = DBInteract.getAllVocabs();
+                    });},),
                   ],
                 ),
               ],
@@ -76,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Adding()))
-                .then((value) => setState(() {}));
+                .then((value) => setState(() {vs.future = DBInteract.getAllVocabs();}));
           },
           child: Icon(
             Icons.add,

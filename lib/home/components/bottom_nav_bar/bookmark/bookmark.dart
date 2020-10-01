@@ -1,10 +1,37 @@
 import 'package:flutter/material.dart';
-//import 'words.dart';
 import 'package:flip_card/flip_card.dart';
-import 'package:ForLingo/global.dart' as globals;
-import 'package:ForLingo/vocab.dart';
+import 'package:ForLingo/models/vocab.dart';
+import 'package:ForLingo/vocabs_interface.dart' as vs;
+
+class FlashCardFuture extends StatefulWidget {
+  @override
+  _FlashCardFutureState createState() => _FlashCardFutureState();
+}
+
+class _FlashCardFutureState extends State<FlashCardFuture> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Vocab>>(
+      future: vs.future,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return FlashCard(snapshot.data);
+        } else {
+          return Center(
+            child: Text(
+              "Loading....",
+              style: TextStyle(fontSize: 40),
+            ),
+          );
+        }
+      },
+    );
+  }
+}
 
 class FlashCard extends StatefulWidget {
+  final List<Vocab> myWordlist;
+  FlashCard(this.myWordlist);
   @override
   _FlashCardState createState() => _FlashCardState();
 }
@@ -14,15 +41,21 @@ class _FlashCardState extends State<FlashCard> {
   int totalWords = 0;
   int diffKey = 0;
   Widget flashcard;
-  List<Vocab> wordlist;
-  _FlashCardState() {
-    wordlist = List.from(globals.words);
-  }
+  List<Vocab> wordlist = List();
+  // void _loadData() async {
+  //   this.wordlist = await DBInteract.getAllVocabs(isSorted: false);
+  //   //wordlist = await vs.future;
+  // }
 
   @override
   void initState() {
     super.initState();
-    totalWords = globals.length();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   //_loadData();
+    // });
+    wordlist = widget.myWordlist;
+    print("Wordlist: $wordlist");
+    totalWords = wordlist.length;
     if (totalWords != 0) {
       // this mean that user have some words to learn
       flashcard = FlashCardContent(
