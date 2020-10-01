@@ -45,7 +45,7 @@ class DatabaseCreator {
       $id INTEGER PRIMARY KEY,
       $word TEXT NOT NULL,
       $meaning TEXT,
-      $sentence TEXT
+      $sentence TEXT,
       $createdAt TEXT,
       $updatedAt TEXT
     )

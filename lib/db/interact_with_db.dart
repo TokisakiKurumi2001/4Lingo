@@ -64,15 +64,19 @@ class DBInteract {
       ${DatabaseCreator.id},
       ${DatabaseCreator.word},
       ${DatabaseCreator.meaning},
-      ${DatabaseCreator.sentence}
+      ${DatabaseCreator.sentence},
+      ${DatabaseCreator.createdAt},
+      ${DatabaseCreator.updatedAt}
     ) VALUES
-    (?,?,?,?)
+    (?,?,?,?,?,?)
     ''';
     List<dynamic> params = [
       myVocab.id,
       myVocab.word,
       myVocab.meaning,
-      myVocab.sentence
+      myVocab.sentence,
+      myVocab.createdAt,
+      myVocab.updatedAt
     ];
     final result = await db.rawInsert(sql, params);
     DatabaseCreator.databaseLog('Add new vocab', sql, null, result, params);
@@ -91,13 +95,14 @@ class DBInteract {
   static Future<void> updateVocab(Vocab newVocab) async {
     final sql = '''
     UPDATE ${DatabaseCreator.tableName}
-    SET ${DatabaseCreator.word} = ?, ${DatabaseCreator.meaning} = ?, ${DatabaseCreator.sentence} = ?
+    SET ${DatabaseCreator.word} = ?, ${DatabaseCreator.meaning} = ?, ${DatabaseCreator.sentence} = ?, ${DatabaseCreator.updatedAt} = ?
     WHERE ${DatabaseCreator.id} = ?
     ''';
     List<dynamic> params = [
       newVocab.word,
       newVocab.meaning,
       newVocab.sentence,
+      newVocab.updatedAt,
       newVocab.id
     ];
     final result = await db.rawUpdate(sql, params);
