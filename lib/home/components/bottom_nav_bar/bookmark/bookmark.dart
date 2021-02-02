@@ -119,15 +119,7 @@ class _FlashCardState extends State<FlashCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      appBar: AppBar(
-        backgroundColor: Colors.blue[300],
-        title: Text(
-          'Flashcards learning',
-          style: TextStyle(
-              fontFamily: 'QuickSand', letterSpacing: 1.0, fontSize: 25.0),
-        ),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text('Flashcard learning')),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 5.0),
         child: Container(
