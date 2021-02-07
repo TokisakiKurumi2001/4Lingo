@@ -1,10 +1,5 @@
-import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:flutter/material.dart';
-import'package:ForLingo/models/vocab.dart';
 import 'package:ForLingo/vocabs_interface.dart' as vs;
-import 'package:ForLingo/home/components/word/Editor.dart';
-import 'package:ForLingo/global.dart' as globals;
-
 
 class HeaderWithSearchBox extends StatefulWidget {
   final Function sethomestate;
@@ -22,21 +17,20 @@ class HeaderWithSearchBox extends StatefulWidget {
 class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
   TextEditingController controller1 = TextEditingController();
   @override
-  void initState()
-  {
+  void initState() {
     super.initState();
     print('initstate');
   }
+
   @override
   Widget build(BuildContext context) {
-    if(vs.handleSearch == true) {
+    if (vs.handleSearch == true) {
       controller1.clear();
       vs.handleSearch = false;
     }
     return Container(
-      height: widget.size.height * 0.12,
-      child: Stack(
-        children: <Widget>[
+        height: widget.size.height * 0.12,
+        child: Stack(children: <Widget>[
           Container(
             padding: EdgeInsets.only(
               left: 20.0,
@@ -85,7 +79,7 @@ class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
                       focusedBorder: InputBorder.none,
                     ),
                     controller: controller1,
-                    onChanged: (val){
+                    onChanged: (val) {
                       widget.sethomestate(val);
                     },
                   ),
@@ -97,9 +91,7 @@ class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
               ],
             ),
           )
-        ]
-      )
-    );
+        ]));
   }
 }
 
@@ -133,7 +125,6 @@ class PersistentHeader extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
     return true;
   }
-
 }
 
 //  Widget searchBar  ()

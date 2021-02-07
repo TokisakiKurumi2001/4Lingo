@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'wordcard.dart';
 import 'package:ForLingo/models/vocab.dart';
-import '../../../global.dart' as globals;
 import 'Editor.dart';
-import 'package:ForLingo/db/database_creator.dart';
-import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:ForLingo/vocabs_interface.dart' as vs;
 
 class Word extends StatefulWidget {

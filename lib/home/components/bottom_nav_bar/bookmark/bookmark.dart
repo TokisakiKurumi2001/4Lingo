@@ -93,11 +93,13 @@ class _FlashCardState extends State<FlashCard> {
 
   // this function is called when user hit "YES"
   void rmRememberCard() {
-    wordlist.removeAt(currWordIndex);
-    if (currWordIndex == wordlist.length) {
-      setState(() {
-        currWordIndex = wordlist.length - 1;
-      });
+    if (wordlist.length != 0) {
+      wordlist.removeAt(currWordIndex);
+      if (currWordIndex == wordlist.length) {
+        setState(() {
+          currWordIndex = wordlist.length - 1;
+        });
+      }
     }
     animationKey();
   }

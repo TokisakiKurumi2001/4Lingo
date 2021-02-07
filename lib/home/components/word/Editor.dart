@@ -1,7 +1,5 @@
-import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:flutter/material.dart';
 import 'package:ForLingo/models/vocab.dart';
-import '../../../global.dart' as globals;
 import 'package:ForLingo/vocabs_interface.dart';
 
 class FrontEditor extends StatefulWidget {
@@ -13,7 +11,9 @@ class FrontEditor extends StatefulWidget {
 
 class _FrontEditorState extends State<FrontEditor> {
   bool isEditing = false;
+  // ignore: non_constant_identifier_names
   final TextEditingController Mycontroller = TextEditingController();
+  // ignore: non_constant_identifier_names
   String Init;
   @override
   void initState() {
@@ -23,7 +23,7 @@ class _FrontEditorState extends State<FrontEditor> {
     Init = widget.w.word;
   }
 
-  @override
+  // ignore: non_constant_identifier_names
   Widget TextorField() {
     if (isEditing) {
       Mycontroller.text = Init;
@@ -43,8 +43,7 @@ class _FrontEditorState extends State<FrontEditor> {
     }
   }
 
-  Widget build(BuildContext context)  {
-
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -81,7 +80,7 @@ class _FrontEditorState extends State<FrontEditor> {
                   widget.w.word = Mycontroller.text;
                   updateTodo(widget.w);
                   //print(Init);
-                  setState(()  {
+                  setState(() {
                     //index = index;
                     isEditing = false;
                     Init = Mycontroller.text;
@@ -114,7 +113,8 @@ class _BackEditorState extends State<BackEditor> {
   //Vocab w;
   @override
   void initState() {
-    print('Init state of back editor ${widget.w.meaning}--${widget.w.sentence}');
+    print(
+        'Init state of back editor ${widget.w.meaning}--${widget.w.sentence}');
     super.initState();
     isEditing = false;
     //w = await DBInteract.getVocab(widget.index);
@@ -190,7 +190,7 @@ class _BackEditorState extends State<BackEditor> {
                       widget.w.meaning = meaningcontroller.text;
                       widget.w.sentence = sentencecontroller.text;
                       updateTodo(widget.w);
-                      setState(()  {
+                      setState(() {
                         //w = await DBInteract.getVocab(widget.index);
                         isEditing = false;
                       });
@@ -209,6 +209,7 @@ class _BackEditorState extends State<BackEditor> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget TextorField(int val) {
     if (isEditing) {
       return Container(
@@ -249,8 +250,6 @@ class Editor extends StatefulWidget {
 }
 
 class _EditorState extends State<Editor> {
-
-
   @override
   Widget build(BuildContext context) {
     print('Back to Editor');

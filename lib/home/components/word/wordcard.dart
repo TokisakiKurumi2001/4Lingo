@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ForLingo/models/vocab.dart';
-import 'package:ForLingo/global.dart' as globals;
 
 class WordCard extends StatelessWidget {
   final Vocab w;
@@ -31,6 +30,7 @@ class WordCard extends StatelessWidget {
               Spacer(),
               FlatButton.icon(
                 onPressed: () {
+                  // ignore: non_constant_identifier_names
                   Widget YesButton = FlatButton(
                     child: Text(
                       'Yes',
@@ -41,6 +41,7 @@ class WordCard extends StatelessWidget {
                       delete();
                     },
                   );
+                  // ignore: non_constant_identifier_names
                   Widget NoButton = FlatButton(
                     child: Text('No'),
                     onPressed: () {

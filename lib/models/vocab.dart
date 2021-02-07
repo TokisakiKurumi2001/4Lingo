@@ -1,5 +1,4 @@
 import 'package:ForLingo/db/database_creator.dart';
-import 'package:ForLingo/vocabs_interface.dart' as vs;
 
 class Vocab {
   int id;
