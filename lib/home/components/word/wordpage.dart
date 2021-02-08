@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'wordcard.dart';
 import 'package:ForLingo/models/vocab.dart';
 import 'Editor.dart';
-import 'package:ForLingo/vocabs_interface.dart' as vs;
+import 'package:ForLingo/models/vocabs_interface.dart' as vs;
 
 class Word extends StatefulWidget {
   final Function sethomestate;

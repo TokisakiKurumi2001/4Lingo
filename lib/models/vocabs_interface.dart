@@ -1,5 +1,5 @@
 import 'package:ForLingo/db/interact_with_db.dart';
-import 'models/vocab.dart';
+import 'package:ForLingo/models/vocab.dart';
 
 bool handleSearch = false;
 Future<List<Vocab>> future;

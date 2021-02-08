@@ -1,7 +1,7 @@
 import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:flutter/material.dart';
 import 'package:ForLingo/models/vocab.dart';
-import 'package:ForLingo/vocabs_interface.dart';
+import 'package:ForLingo/models/vocabs_interface.dart';
 
 class Adding extends StatefulWidget {
   @override

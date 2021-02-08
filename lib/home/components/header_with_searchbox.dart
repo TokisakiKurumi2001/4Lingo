@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ForLingo/vocabs_interface.dart' as vs;
+import 'package:ForLingo/models/vocabs_interface.dart' as vs;
 
 class HeaderWithSearchBox extends StatefulWidget {
   final Function sethomestate;

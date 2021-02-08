@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ForLingo/models/vocab.dart';
-import 'package:ForLingo/vocabs_interface.dart';
+import 'package:ForLingo/models/vocabs_interface.dart';
 
 class FrontEditor extends StatefulWidget {
   final Vocab w;

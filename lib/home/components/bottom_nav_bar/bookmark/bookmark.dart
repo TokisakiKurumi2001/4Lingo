@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:ForLingo/models/vocab.dart';
-import 'package:ForLingo/vocabs_interface.dart' as vs;
+import 'package:ForLingo/models/vocabs_interface.dart' as vs;
 
 class FlashCardFuture extends StatefulWidget {
   @override
