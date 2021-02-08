@@ -26,7 +26,6 @@ class NotifyCenter {
 
   //NOTE: when user click on the notification alert
   Future onSelectNotification(String payload) async {
-    print("Hello World");
     if (payload != null) {
       print(payload);
     }
@@ -57,59 +56,6 @@ class NotifyCenter {
     );
   }
 
-  void showNotificationAfterTime() async {
-    await notificationAfterTime(1, 15);
-  }
-
-  void showAllNotification() async {
-    final List<PendingNotificationRequest> pendingNotificationRequests =
-        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
-    List<int> ids = [1, 2, 3, 4];
-    List<int> pendingIds = List();
-    for (var d in pendingNotificationRequests) {
-      pendingIds.add(d.id);
-    }
-
-    for (int id in ids) {
-      if (!pendingIds.contains(id)) {
-        await notificationAfterTime(id, id);
-      }
-    }
-  }
-
-  Future<void> notificationAfterTime(int id, int delayTime) async {
-    tz.initializeTimeZones();
-    final hcm = tz.getLocation('Asia/Ho_Chi_Minh');
-    tz.TZDateTime scheduledDate =
-        tz.TZDateTime.now(hcm).add(Duration(minutes: delayTime));
-    DateTime d = DateTime.now();
-    print("$scheduledDate $d");
-    AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-      '$id',
-      '4Lingo',
-      'Learning',
-      priority: Priority.high,
-      importance: Importance.max,
-      ticker: 'ticker',
-    );
-
-    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
-
-    NotificationDetails notificationDetails = NotificationDetails(
-        android: androidNotificationDetails, iOS: iosNotificationDetails);
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-        id,
-        'Learning',
-        'Time to revise your flashcards with group $id',
-        scheduledDate,
-        notificationDetails,
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        payload: '$id $scheduledDate');
-  }
-
   Future<bool> appLaunchNotification() async {
     final NotificationAppLaunchDetails notificationAppLaunchDetails =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
@@ -128,7 +74,7 @@ class NotifyCenter {
     }
   }
 
-  void scheduleAtThisTime(int id, DateTime nextDate, String condition) async {
+  void scheduleAtThisTime(int id, DateTime nextDate) async {
     final List<PendingNotificationRequest> pendingNotificationRequests =
         await flutterLocalNotificationsPlugin.pendingNotificationRequests();
     bool duplicate = false;
@@ -139,12 +85,11 @@ class NotifyCenter {
       }
     }
     if (!duplicate) {
-      await scheduleNotification(id, nextDate, condition);
+      await scheduleNotification(id, nextDate);
     }
   }
 
-  Future<void> scheduleNotification(
-      int id, DateTime nextDate, String condition) async {
+  Future<void> scheduleNotification(int id, DateTime nextDate) async {
     tz.initializeTimeZones();
     final hcm = tz.getLocation('Asia/Ho_Chi_Minh');
     tz.TZDateTime scheduledDate = tz.TZDateTime.from(nextDate, hcm);

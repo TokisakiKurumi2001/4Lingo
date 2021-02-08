@@ -177,7 +177,7 @@ class _AddingState extends State<Adding> {
                                       word: controller1.text,
                                       meaning: controller2.text,
                                       sentence: controller3.text);
-                                  createTodo(nw);
+                                  createNewVocabModel(nw);
                                   setState(() {
                                     controller1.clear();
                                     controller2.clear();

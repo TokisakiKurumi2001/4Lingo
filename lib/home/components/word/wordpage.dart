@@ -41,7 +41,7 @@ class _WordState extends State<Word> {
                         .map((w) => WordCard(
                               w: w,
                               delete: () {
-                                vs.deleteTodo(w);
+                                vs.deleteVocabModel(w);
                                 widget.sethomestate();
                               },
                               movetoeditor: () {

@@ -78,7 +78,7 @@ class _FrontEditorState extends State<FrontEditor> {
                 onPressed: () {
                   //(globals.words[index]).word = Mycontroller.text;
                   widget.w.word = Mycontroller.text;
-                  updateTodo(widget.w);
+                  updateVocabModel(widget.w);
                   //print(Init);
                   setState(() {
                     //index = index;
@@ -189,7 +189,7 @@ class _BackEditorState extends State<BackEditor> {
                       //    sentencecontroller.text;
                       widget.w.meaning = meaningcontroller.text;
                       widget.w.sentence = sentencecontroller.text;
-                      updateTodo(widget.w);
+                      updateVocabModel(widget.w);
                       setState(() {
                         //w = await DBInteract.getVocab(widget.index);
                         isEditing = false;
