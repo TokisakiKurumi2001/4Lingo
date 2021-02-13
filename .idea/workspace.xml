@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ddd647fb-be86-457d-b932-1eec66d0265d" name="Default Changelist" comment="">
+    <list default="true" id="ddd647fb-be86-457d-b932-1eec66d0265d" name="Default Changelist" comment="Update Statistics">
+      <change beforePath="$PROJECT_DIR$/.idea/fourlingomaster.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fourlingomaster.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/4Lingo" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/4Lingo/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/.flutter-plugins" afterDir="false" />
@@ -48,10 +49,10 @@
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="flutter.settings" />
+    <property name="settings.editor.selected.configurable" value="dart.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RunDashboard">
@@ -97,5 +98,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update Statistics" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Statistics" />
   </component>
 </project>
