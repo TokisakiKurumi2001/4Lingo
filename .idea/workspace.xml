@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddd647fb-be86-457d-b932-1eec66d0265d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/4Lingo" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/4Lingo/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/.flutter-plugins" afterDir="false" />
