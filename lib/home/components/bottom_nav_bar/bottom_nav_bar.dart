@@ -1,8 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'bookmark/bookmark.dart';
 import 'bookmark/statics.dart';
-
+import 'package:ForLingo/vocabs_interface.dart' as vs;
+import 'package:ForLingo/db/statistic_database_helper.dart';
+import 'package:ForLingo/db/interact_with_db.dart';
 class MyBottomNavBar extends StatelessWidget {
   const MyBottomNavBar({
     Key key,
@@ -35,6 +38,7 @@ class MyBottomNavBar extends StatelessWidget {
               color: Colors.blue,
             ),
             onPressed: () {
+              vs.future = DBInteract.getAllVocabs();
               //Bookmark popup
               Navigator.push(
                 context,
@@ -49,7 +53,14 @@ class MyBottomNavBar extends StatelessWidget {
               FontAwesome5.chart_line,
               color: Colors.blue,
             ),
-            onPressed: () {
+            onPressed: () async {
+              await StatDBInteract.updateStat();
+              int val = 0;
+              //calculate total num of words to be displayed today and store it to int val
+              /*
+                   something goes here
+              */
+              updateDataBase(val);
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -64,3 +75,27 @@ class MyBottomNavBar extends StatelessWidget {
     );
   }
 }
+
+Future<void> updateDataBase(int value) async
+{
+  DateTime currentTime = DateTime.now();
+  int week;
+  int day = currentTime.day;
+  if (day <= 7)
+    week = 1;
+  else if (day <= 14)
+    week = 2;
+  else if (day <= 21)
+    week = 3;
+  else if (day <= 28)
+    week = 4;
+  else
+    week = 5;
+  await StatDBInteract.upDateTotalVocab(0, currentTime.weekday,value);
+  await StatDBInteract.upDateTotalVocab(1, week,value);
+  await StatDBInteract.upDateTotalVocab(2, currentTime.month,value);
+  await StatDBInteract.upDateTotalVocab(3, 1,value);
+  return;
+}
+
+

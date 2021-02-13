@@ -1,7 +1,7 @@
 import 'package:ForLingo/db/database_creator.dart';
-
 class Vocab {
   int id;
+  int isRemember;
   String createdAt;
   String updatedAt;
   String word, meaning, sentence;

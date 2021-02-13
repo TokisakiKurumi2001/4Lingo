@@ -1,9 +1,11 @@
 import 'package:ForLingo/db/interact_with_db.dart';
 import 'models/vocab.dart';
+import 'models/stat.dart';
+
 
 bool handleSearch = false;
 Future<List<Vocab>> future;
-
+Future<List<Stat>> statFuture;
 Future<int> createTodo(Vocab v) async {
   int count = await DBInteract.todosCount();
   count += 1;

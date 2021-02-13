@@ -3,25 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="ddd647fb-be86-457d-b932-1eec66d0265d" name="Default Changelist" comment="Update Statistics">
       <change beforePath="$PROJECT_DIR$/.idea/fourlingomaster.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fourlingomaster.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/.flutter-plugins" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/ios/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/ios/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/ios/Flutter/.last_build_id" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/ios/Flutter/.last_build_id" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/lib/db/database_creator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/lib/db/database_creator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/lib/db/interact_with_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/lib/db/interact_with_db.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/lib/home/components/bottom_nav_bar/bookmark/bookmark.dart" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/lib/home/components/bottom_nav_bar/bookmark/bookmark.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/lib/home/components/bottom_nav_bar/bookmark/words.dart" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/lib/home/components/bottom_nav_bar/bookmark/words.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/lib/home/components/bottom_nav_bar/bottom_nav_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/lib/home/components/bottom_nav_bar/bottom_nav_bar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/lib/home/components/data/month.dart" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/lib/home/components/data/month.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/lib/home/components/data/week.dart" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/lib/home/components/data/week.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/lib/home/components/data/year.dart" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/lib/home/components/data/year.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/lib/models/vocab.dart" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/lib/models/vocab.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/lib/vocabs_interface.dart" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/lib/vocabs_interface.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4Lingo/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/4Lingo/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/4Lingo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/db/interact_with_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/db/interact_with_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/home/components/bottom_nav_bar/bookmark/bookmark.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home/components/bottom_nav_bar/bookmark/bookmark.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/home/components/bottom_nav_bar/bookmark/words.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home/components/bottom_nav_bar/bookmark/words.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/home/components/bottom_nav_bar/bottom_nav_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home/components/bottom_nav_bar/bottom_nav_bar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/home/components/data/month.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home/components/data/month.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/home/components/data/week.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home/components/data/week.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/home/components/data/year.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home/components/data/year.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/vocab.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/vocab.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/vocabs_interface.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/vocabs_interface.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,7 +35,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/4Lingo" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1nvfQjVI3xD0RNu1anWXSOEjIka" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -69,8 +63,55 @@
   </component>
   <component name="RunManager">
     <configuration name="main" type="FlutterRunConfigurationType" factoryName="Flutter">
-      <option name="filePath" value="$PROJECT_DIR$/4Lingo/lib/main.dart" />
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
       <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <module name="4Lingo" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+      <module name="4Lingo" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
   </component>
   <component name="SvnConfiguration">
