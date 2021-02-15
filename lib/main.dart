@@ -4,9 +4,10 @@ import 'package:ForLingo/home/components/data/week.dart';
 import 'package:ForLingo/home/components/data/month.dart';
 import 'package:ForLingo/home/components/data/year.dart';
 import 'package:ForLingo/db/database_creator.dart';
-
+import 'package:ForLingo/db/statistic_database_creator.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await StatDBCreator().initDB();
   await DatabaseCreator().initDB();
   runApp(MyApp());
 }
@@ -14,6 +15,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print("myApp");
     return MaterialApp(
         theme: ThemeData(primarySwatch: Colors.blue),
         //home: HomeScreen(),
@@ -27,3 +29,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
