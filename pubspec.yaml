@@ -35,6 +35,7 @@ dependencies:
   path: ^1.6.4
   autocomplete_textfield: ^1.7.3
   flutter_local_notifications: ^4.0.0
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:

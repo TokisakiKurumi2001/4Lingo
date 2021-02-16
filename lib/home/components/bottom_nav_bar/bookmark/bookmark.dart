@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:ForLingo/models/vocab.dart';
 import 'package:ForLingo/models/vocabs_interface.dart' as vs;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FlashCardFuture extends StatefulWidget {
   @override
@@ -42,17 +43,11 @@ class _FlashCardState extends State<FlashCard> {
   int diffKey = 0;
   Widget flashcard;
   List<Vocab> wordlist = List();
-  // void _loadData() async {
-  //   this.wordlist = await DBInteract.getAllVocabs(isSorted: false);
-  //   //wordlist = await vs.future;
-  // }
+  bool firstTime = true;
 
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   //_loadData();
-    // });
     wordlist = widget.myWordlist;
     print("Wordlist: $wordlist");
     totalWords = wordlist.length;
@@ -62,9 +57,33 @@ class _FlashCardState extends State<FlashCard> {
         currWords: wordlist[currWordIndex],
         key: ValueKey(diffKey),
       );
+      checkFirstTime();
     } else {
       flashcard = Text('Please add some words');
     }
+  }
+
+  Future<void> checkFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    DateTime currentTime = DateTime.now();
+    String lastString = prefs.getString('StatLast');
+    if (lastString != null) {
+      DateTime lastTime = DateTime.parse(lastString);
+      if (lastTime.day == currentTime.day &&
+          lastTime.month == currentTime.month &&
+          lastTime.year == currentTime.year) {
+        firstTime = false;
+      } else {
+        firstTime = true;
+      }
+    } else {
+      firstTime = true;
+    }
+    print(lastString);
+    print(currentTime);
+    await prefs.setString('StatLast', currentTime.toString());
+    setState(() {});
+    return;
   }
 
   // this function is called to change the diffKey so that
