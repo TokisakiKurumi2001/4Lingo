@@ -1,22 +1,63 @@
+import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:ForLingo/models/vocab.dart';
 import 'package:ForLingo/models/vocabs_interface.dart' as vs;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ForLingo/notification/time_manager.dart';
 
 class FlashCardFuture extends StatefulWidget {
+  static String routeName = '/bookmark';
   @override
   _FlashCardFutureState createState() => _FlashCardFutureState();
 }
 
 class _FlashCardFutureState extends State<FlashCardFuture> {
+  bool firstTime = true;
+
+  void checkFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    DateTime currentTime = DateTime.now();
+    String lastString = prefs.getString('StatLast');
+    if (lastString != null) {
+      DateTime lastTime = DateTime.parse(lastString);
+      if (lastTime.day == currentTime.day &&
+          lastTime.month == currentTime.month &&
+          lastTime.year == currentTime.year) {
+        firstTime = false;
+      } else {
+        firstTime = true;
+      }
+    } else {
+      firstTime = true;
+    }
+    print(lastString);
+    print(currentTime);
+    await prefs.setString('StatLast', currentTime.toString());
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkFirstTime();
+    String today = TimeManager.getNowToString();
+    if (firstTime) {
+      // get the words with the `next` equal to today
+      vs.future = DBInteract.getVocabWithCondition("next", today);
+    } else {
+      // get the words with the field `update_notify_date` equal to today
+      vs.future = DBInteract.getVocabWithCondition("update_notify_date", today);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Vocab>>(
       future: vs.future,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return FlashCard(snapshot.data);
+          return FlashCard(snapshot.data, firstTime);
         } else {
           return Center(
             child: Text(
@@ -32,7 +73,8 @@ class _FlashCardFutureState extends State<FlashCardFuture> {
 
 class FlashCard extends StatefulWidget {
   final List<Vocab> myWordlist;
-  FlashCard(this.myWordlist);
+  final bool firstVisited;
+  FlashCard(this.myWordlist, this.firstVisited);
   @override
   _FlashCardState createState() => _FlashCardState();
 }
@@ -57,7 +99,7 @@ class _FlashCardState extends State<FlashCard> {
         currWords: wordlist[currWordIndex],
         key: ValueKey(diffKey),
       );
-      checkFirstTime();
+      firstTime = widget.firstVisited;
     } else {
       flashcard = Text('Please add some words');
     }
@@ -136,6 +178,61 @@ class _FlashCardState extends State<FlashCard> {
     });
   }
 
+  void updateNotifyDateUserInput({bool answerCorrect, Vocab vocab}) async {
+    if (answerCorrect) {
+      int newGroup = vocab.group;
+      int newLevel = vocab.level;
+      bool maximum = false;
+      if (vocab.group == 1) {
+        if (vocab.level == 0) {
+          newLevel += 1;
+        } else if (vocab.level == 1) {
+          newGroup = 2;
+          newLevel = 0;
+        } else if (vocab.level == -1) {
+          newGroup = 14;
+          maximum = true;
+        }
+      } else if (vocab.group == 2) {
+        newGroup = 7;
+      } else if (vocab.group == 7) {
+        newLevel = 0;
+        newGroup = 14;
+      } else if (vocab.group == 14) {
+        maximum = true;
+      }
+      String today = TimeManager.getNowToString();
+      if (!maximum) {
+        await vs.updateNotifyVocabModel(vocab, newGroup, newLevel, today);
+      }
+    } else {
+      int newGroup = vocab.group;
+      int newLevel = vocab.level;
+      if (vocab.group == 1) {
+        if (vocab.level == 0) {
+          newGroup = 1;
+          newLevel = 0;
+        } else if (vocab.level == 1) {
+          newLevel -= 1;
+        } else if (vocab.level == -1) {
+          newGroup = 7;
+          newLevel = 0;
+        }
+      } else if (vocab.group == 2) {
+        newLevel = 0;
+        newGroup = 1;
+      } else if (vocab.group == 7) {
+        newLevel = 0;
+        newGroup = 2;
+      } else if (vocab.group == 14) {
+        newGroup = 1;
+        newLevel = -1;
+      }
+      String today = TimeManager.getNowToString();
+      await vs.updateNotifyVocabModel(vocab, newGroup, newLevel, today);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,6 +282,9 @@ class _FlashCardState extends State<FlashCard> {
                           textColor: Colors.white,
                           color: Colors.red,
                           onPressed: () {
+                            updateNotifyDateUserInput(
+                                answerCorrect: false,
+                                vocab: wordlist[currWordIndex]);
                             nextCard();
                             animationFlashCard();
                           },
@@ -200,6 +300,9 @@ class _FlashCardState extends State<FlashCard> {
                           textColor: Colors.white,
                           color: Colors.green,
                           onPressed: () {
+                            updateNotifyDateUserInput(
+                                answerCorrect: true,
+                                vocab: wordlist[currWordIndex]);
                             rmRememberCard();
                             animationFlashCard();
                           },

@@ -52,10 +52,10 @@ class DatabaseCreator {
       $sentence TEXT,
       $createdAt TEXT,
       $updatedAt TEXT,
-      $next TEXT NOT NULL,
-      $group INTEGER NOT NULL,
-      $level INTEGER NOT NULL,
-      $updateNotifyDate TEXT NOT NULL
+      $next TEXT,
+      $group INTEGER,
+      $level INTEGER,
+      $updateNotifyDate TEXT
     )
     ''';
     await db.execute(sql);
