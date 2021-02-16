@@ -11,12 +11,6 @@ class Body extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           HeaderWithSearchBox(size: size),
-          /*Center(
-            child: Text(
-              'data',
-              style: TextStyle(fontSize: 40),
-            ),
-          ),*/
           Word(),
         ],
       ),

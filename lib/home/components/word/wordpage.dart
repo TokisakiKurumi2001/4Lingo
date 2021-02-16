@@ -15,7 +15,6 @@ class _WordState extends State<Word> {
   @override
   void initState() {
     super.initState();
-    //vs.future = DBInteract.getAllVocabs();
   }
 
   @override

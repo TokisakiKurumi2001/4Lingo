@@ -23,9 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
-      //appBar: buildAppBar(),
-      //body: Body(),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -49,16 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          // SliverAppBar(
-          //   toolbarHeight: 80,
-          //   pinned: true,
-          //   backgroundColor: Colors.white,
-          //   automaticallyImplyLeading: false,
-          //   actions: <Widget>[
-          //     Container(),
-          //   ],
-          //   title: HeaderWithSearchBox(size: size),
-          // ),
           SliverPersistentHeader(
             pinned: true,
             delegate: PersistentHeader(
@@ -161,20 +148,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-/*
-  AppBar buildAppBar() {
-    return AppBar(
-      centerTitle: true,
-      elevation: 0,
-      title: Text(
-        '4Lingo',
-        style: TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-   */
 }

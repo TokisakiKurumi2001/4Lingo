@@ -37,17 +37,6 @@ class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
               right: 20.0,
               bottom: 56,
             ),
-            /*
-            height: size.height * 0.2 - 100,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(36),
-                bottomRight: Radius.circular(36),
-              ),
-            ),
-
-             */
           ),
           Container(
             alignment: Alignment.center,
@@ -126,74 +115,3 @@ class PersistentHeader extends SliverPersistentHeaderDelegate {
     return true;
   }
 }
-
-//  Widget searchBar  ()
-//  {
-//    GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
-//
-//    AutoCompleteTextField searchTextField = AutoCompleteTextField();
-//
-//    TextEditingController controller = new TextEditingController();
-//    return Row(
-//      children: <Widget>[
-//        Expanded(
-//          child: searchTextField =  AutoCompleteTextField<String>(
-//            decoration: InputDecoration(
-//              hintText: "Search word",
-//              hintStyle: TextStyle(
-//                color: Colors.blue.withOpacity(0.5),
-//              ),
-//              enabledBorder: InputBorder.none,
-//              focusedBorder: InputBorder.none,
-//            ),
-//            itemSubmitted: (item) async {
-//              Vocab w = await DBInteract.getVocabfromString(item);
-//              Navigator.push(
-//                context, MaterialPageRoute(builder: (context) => Editor(w)
-//             )).then((val)=>
-//              setState(() {searchTextField.clear();
-//              widget.sethomestate();
-//              _loadData();}
-//              ));
-//            },
-//              clearOnSubmit: false,
-//              key: key,
-//              suggestions: list,
-//              itemBuilder: (context, item) {
-//                return Container(
-//                  color: Colors.blue[900],
-//                  padding: EdgeInsets.fromLTRB(10, 2, 10, 0),
-//                  height: 40,
-//                    width: 50,
-//                    child:Column(
-//                      crossAxisAlignment: CrossAxisAlignment.start,
-//                      children: [
-//                        Text(item,
-//                          style: TextStyle(
-//                            color: Colors.white,
-//                            fontWeight: FontWeight.w400,
-//                              fontSize: 16.0
-//                          ),),
-//                        Divider( color: Colors.white,)
-//                      ],
-//                    ),
-//                  );
-//              },
-//              itemSorter: (a, b) {
-//                return a.compareTo(b);
-//              },
-//              itemFilter: (item, query) {
-//                return item
-//                    .toLowerCase()
-//                    .startsWith(query.toLowerCase());
-//              }
-//
-//          ),
-//        ),
-//        Icon(
-//          Icons.search,
-//          color: Colors.blue,
-//        ),
-//      ],
-//    );
-//  }
