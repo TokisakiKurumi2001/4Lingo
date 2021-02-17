@@ -20,7 +20,6 @@ class _WordState extends State<Word> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        //child: showingList(),
         child: FutureBuilder<List<Vocab>>(
             future: vs.future,
             builder: (context, snapshot) {

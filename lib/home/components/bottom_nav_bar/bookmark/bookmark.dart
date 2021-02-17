@@ -13,42 +13,49 @@ class FlashCardFuture extends StatefulWidget {
 }
 
 class _FlashCardFutureState extends State<FlashCardFuture> {
-  bool firstTime = true;
+  bool firstTime = false;
 
-  void checkFirstTime() async {
+  Future<bool> checkFirstTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     DateTime currentTime = DateTime.now();
     String lastString = prefs.getString('StatLast');
+    bool firstTimeVisited = true;
     if (lastString != null) {
       DateTime lastTime = DateTime.parse(lastString);
       if (lastTime.day == currentTime.day &&
           lastTime.month == currentTime.month &&
           lastTime.year == currentTime.year) {
-        firstTime = false;
+        firstTimeVisited = false;
       } else {
-        firstTime = true;
+        firstTimeVisited = true;
       }
     } else {
-      firstTime = true;
+      firstTimeVisited = true;
     }
     print(lastString);
     print(currentTime);
     await prefs.setString('StatLast', currentTime.toString());
-    setState(() {});
+    return firstTimeVisited;
   }
 
   @override
   void initState() {
     super.initState();
-    checkFirstTime();
-    String today = TimeManager.getNowToString();
-    if (firstTime) {
-      // get the words with the `next` equal to today
-      vs.future = DBInteract.getVocabWithCondition("next", today);
-    } else {
-      // get the words with the field `update_notify_date` equal to today
-      vs.future = DBInteract.getVocabWithCondition("update_notify_date", today);
-    }
+    checkFirstTime().then((firstTimeValue) {
+      String today = TimeManager.getNowToString();
+      print("This is bookmark day: $today, firstTime is now $firstTime");
+      if (firstTimeValue == true) {
+        // get the words with the `next` equal to today
+        print("This is the first time user learned: $today");
+        vs.future = DBInteract.getVocabWithCondition(1, today);
+      } else {
+        // get the words with the field `update_notify_date` equal to today
+        print("This is the second time user learned: $today");
+        vs.future = DBInteract.getVocabWithCondition(2, today);
+      }
+      print("first time is now $firstTimeValue");
+      firstTime = firstTimeValue;
+    });
   }
 
   @override
@@ -59,10 +66,9 @@ class _FlashCardFutureState extends State<FlashCardFuture> {
         if (snapshot.hasData) {
           return FlashCard(snapshot.data, firstTime);
         } else {
-          return Center(
-            child: Text(
-              "Loading....",
-              style: TextStyle(fontSize: 40),
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
             ),
           );
         }
@@ -85,7 +91,7 @@ class _FlashCardState extends State<FlashCard> {
   int diffKey = 0;
   Widget flashcard;
   List<Vocab> wordlist = List();
-  bool firstTime = true;
+  bool firstTime;
 
   @override
   void initState() {
@@ -99,10 +105,10 @@ class _FlashCardState extends State<FlashCard> {
         currWords: wordlist[currWordIndex],
         key: ValueKey(diffKey),
       );
-      firstTime = widget.firstVisited;
     } else {
       flashcard = Text('Please add some words');
     }
+    firstTime = widget.firstVisited;
   }
 
   Future<void> checkFirstTime() async {
@@ -179,57 +185,59 @@ class _FlashCardState extends State<FlashCard> {
   }
 
   void updateNotifyDateUserInput({bool answerCorrect, Vocab vocab}) async {
-    if (answerCorrect) {
-      int newGroup = vocab.group;
-      int newLevel = vocab.level;
-      bool maximum = false;
-      if (vocab.group == 1) {
-        if (vocab.level == 0) {
-          newLevel += 1;
-        } else if (vocab.level == 1) {
-          newGroup = 2;
+    if (firstTime == true) {
+      if (answerCorrect) {
+        int newGroup = vocab.group;
+        int newLevel = vocab.level;
+        bool maximum = false;
+        if (vocab.group == 1) {
+          if (vocab.level == 0) {
+            newLevel += 1;
+          } else if (vocab.level == 1) {
+            newGroup = 2;
+            newLevel = 0;
+          } else if (vocab.level == -1) {
+            newGroup = 14;
+            maximum = true;
+          }
+        } else if (vocab.group == 2) {
+          newGroup = 7;
+        } else if (vocab.group == 7) {
           newLevel = 0;
-        } else if (vocab.level == -1) {
           newGroup = 14;
+        } else if (vocab.group == 14) {
           maximum = true;
         }
-      } else if (vocab.group == 2) {
-        newGroup = 7;
-      } else if (vocab.group == 7) {
-        newLevel = 0;
-        newGroup = 14;
-      } else if (vocab.group == 14) {
-        maximum = true;
-      }
-      String today = TimeManager.getNowToString();
-      if (!maximum) {
+        String today = TimeManager.getNowToString();
+        if (!maximum) {
+          await vs.updateNotifyVocabModel(vocab, newGroup, newLevel, today);
+        }
+      } else {
+        int newGroup = vocab.group;
+        int newLevel = vocab.level;
+        if (vocab.group == 1) {
+          if (vocab.level == 0) {
+            newGroup = 1;
+            newLevel = 0;
+          } else if (vocab.level == 1) {
+            newLevel -= 1;
+          } else if (vocab.level == -1) {
+            newGroup = 7;
+            newLevel = 0;
+          }
+        } else if (vocab.group == 2) {
+          newLevel = 0;
+          newGroup = 1;
+        } else if (vocab.group == 7) {
+          newLevel = 0;
+          newGroup = 2;
+        } else if (vocab.group == 14) {
+          newGroup = 1;
+          newLevel = -1;
+        }
+        String today = TimeManager.getNowToString();
         await vs.updateNotifyVocabModel(vocab, newGroup, newLevel, today);
       }
-    } else {
-      int newGroup = vocab.group;
-      int newLevel = vocab.level;
-      if (vocab.group == 1) {
-        if (vocab.level == 0) {
-          newGroup = 1;
-          newLevel = 0;
-        } else if (vocab.level == 1) {
-          newLevel -= 1;
-        } else if (vocab.level == -1) {
-          newGroup = 7;
-          newLevel = 0;
-        }
-      } else if (vocab.group == 2) {
-        newLevel = 0;
-        newGroup = 1;
-      } else if (vocab.group == 7) {
-        newLevel = 0;
-        newGroup = 2;
-      } else if (vocab.group == 14) {
-        newGroup = 1;
-        newLevel = -1;
-      }
-      String today = TimeManager.getNowToString();
-      await vs.updateNotifyVocabModel(vocab, newGroup, newLevel, today);
     }
   }
 
@@ -282,11 +290,13 @@ class _FlashCardState extends State<FlashCard> {
                           textColor: Colors.white,
                           color: Colors.red,
                           onPressed: () {
-                            updateNotifyDateUserInput(
-                                answerCorrect: false,
-                                vocab: wordlist[currWordIndex]);
-                            nextCard();
-                            animationFlashCard();
+                            if (wordlist.length != 0) {
+                              updateNotifyDateUserInput(
+                                  answerCorrect: false,
+                                  vocab: wordlist[currWordIndex]);
+                              nextCard();
+                              animationFlashCard();
+                            }
                           },
                         ),
                       ),
@@ -300,11 +310,13 @@ class _FlashCardState extends State<FlashCard> {
                           textColor: Colors.white,
                           color: Colors.green,
                           onPressed: () {
-                            updateNotifyDateUserInput(
-                                answerCorrect: true,
-                                vocab: wordlist[currWordIndex]);
-                            rmRememberCard();
-                            animationFlashCard();
+                            if (wordlist.length != 0) {
+                              updateNotifyDateUserInput(
+                                  answerCorrect: true,
+                                  vocab: wordlist[currWordIndex]);
+                              rmRememberCard();
+                              animationFlashCard();
+                            }
                           },
                         ),
                       ),

@@ -31,9 +31,15 @@ class DBInteract {
   }
 
   static Future<List<Vocab>> getVocabWithCondition(
-      String column, String condition) async {
+      int columnCond, String condition) async {
+    String column;
+    if (columnCond == 1) {
+      column = DatabaseCreator.next;
+    } else if (columnCond == 2) {
+      column = DatabaseCreator.updateNotifyDate;
+    }
     final sql = '''
-    SELECT * FROM ${DatabaseCreator.tableName} WHERE $column = $condition
+    SELECT * FROM ${DatabaseCreator.tableName} WHERE $column = "$condition"
     ''';
     final data = await db.rawQuery(sql);
     List<Vocab> vocabs = List();
@@ -42,6 +48,9 @@ class DBInteract {
       final todo = Vocab.fromJson(node);
       vocabs.add(todo);
     }
+
+    DatabaseCreator.databaseLog(
+        "Select words where $column = \"$condition\"", sql, data);
 
     return vocabs;
   }

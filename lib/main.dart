@@ -1,3 +1,4 @@
+import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:ForLingo/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ForLingo/home/components/data/week.dart';
@@ -6,6 +7,7 @@ import 'package:ForLingo/home/components/data/year.dart';
 import 'package:ForLingo/db/database_creator.dart';
 import 'package:ForLingo/notification/notify.dart' as notify;
 import 'package:ForLingo/home/components/bottom_nav_bar/bookmark/bookmark.dart';
+import 'package:ForLingo/models/vocabs_interface.dart' as vs;
 
 String initRoute = '/';
 void main() async {
@@ -25,13 +27,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  dynamic clicking() {
+  clicking() async {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext context) => FlashCardFuture(),
       ),
-    );
+    ).then((_) {
+      setState(() {
+        vs.future = DBInteract.getAllVocabs();
+      });
+    });
   }
 
   @override
