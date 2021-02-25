@@ -152,7 +152,7 @@ class DBInteract {
         .rawQuery('''SELECT MAX(id) FROM ${DatabaseCreator.tableName}''');
 
     int count = data[0].values.elementAt(0);
-    int idForNewItem = count == null ? 1 : count++;
-    return idForNewItem;
+    int numberOfItems = count == null ? 0 : count;
+    return numberOfItems;
   }
 }

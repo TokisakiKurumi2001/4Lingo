@@ -105,13 +105,16 @@ class NotifyCenter {
 
     IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
 
+    //TODO: remove payload when in real app
+    String _payload = nextDate.toString();
     NotificationDetails notificationDetails = NotificationDetails(
         android: androidNotificationDetails, iOS: iosNotificationDetails);
     await flutterLocalNotificationsPlugin.zonedSchedule(id, 'Learning',
         'Time to revise your flashcards', scheduledDate, notificationDetails,
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime);
+            UILocalNotificationDateInterpretation.absoluteTime,
+        payload: _payload);
   }
 }
 

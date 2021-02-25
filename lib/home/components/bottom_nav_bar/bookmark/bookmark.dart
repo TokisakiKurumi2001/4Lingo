@@ -14,6 +14,7 @@ class FlashCardFuture extends StatefulWidget {
 
 class _FlashCardFutureState extends State<FlashCardFuture> {
   bool firstTime = false;
+  Future<List<Vocab>> wordsToLearn;
 
   Future<bool> checkFirstTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -47,21 +48,22 @@ class _FlashCardFutureState extends State<FlashCardFuture> {
       if (firstTimeValue == true) {
         // get the words with the `next` equal to today
         print("This is the first time user learned: $today");
-        vs.future = DBInteract.getVocabWithCondition(1, today);
+        wordsToLearn = DBInteract.getVocabWithCondition(1, today);
       } else {
         // get the words with the field `update_notify_date` equal to today
         print("This is the second time user learned: $today");
-        vs.future = DBInteract.getVocabWithCondition(2, today);
+        wordsToLearn = DBInteract.getVocabWithCondition(2, today);
       }
       print("first time is now $firstTimeValue");
       firstTime = firstTimeValue;
+      setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Vocab>>(
-      future: vs.future,
+      future: wordsToLearn,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return FlashCard(snapshot.data, firstTime);
@@ -92,6 +94,9 @@ class _FlashCardState extends State<FlashCard> {
   Widget flashcard;
   List<Vocab> wordlist = List();
   bool firstTime;
+  // this will prevent the card whose first time is not remember, and the
+  // second time is remembered.
+  int wordsRevised = 0;
 
   @override
   void initState() {
@@ -109,29 +114,6 @@ class _FlashCardState extends State<FlashCard> {
       flashcard = Text('Please add some words');
     }
     firstTime = widget.firstVisited;
-  }
-
-  Future<void> checkFirstTime() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    DateTime currentTime = DateTime.now();
-    String lastString = prefs.getString('StatLast');
-    if (lastString != null) {
-      DateTime lastTime = DateTime.parse(lastString);
-      if (lastTime.day == currentTime.day &&
-          lastTime.month == currentTime.month &&
-          lastTime.year == currentTime.year) {
-        firstTime = false;
-      } else {
-        firstTime = true;
-      }
-    } else {
-      firstTime = true;
-    }
-    print(lastString);
-    print(currentTime);
-    await prefs.setString('StatLast', currentTime.toString());
-    setState(() {});
-    return;
   }
 
   // this function is called to change the diffKey so that
@@ -185,7 +167,8 @@ class _FlashCardState extends State<FlashCard> {
   }
 
   void updateNotifyDateUserInput({bool answerCorrect, Vocab vocab}) async {
-    if (firstTime == true) {
+    if (firstTime == true && wordsRevised < totalWords) {
+      wordsRevised += 1;
       if (answerCorrect) {
         int newGroup = vocab.group;
         int newLevel = vocab.level;
