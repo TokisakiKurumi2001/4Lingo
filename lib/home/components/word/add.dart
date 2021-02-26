@@ -1,10 +1,7 @@
 import 'package:ForLingo/db/interact_with_db.dart';
-import 'package:ForLingo/vocabs_interface.dart' as vs;
 import 'package:flutter/material.dart';
 import 'package:ForLingo/models/vocab.dart';
-import '../../../global.dart' as globals;
-import 'package:ForLingo/vocabs_interface.dart';
-import 'package:intl/intl.dart';
+import 'package:ForLingo/models/vocabs_interface.dart';
 
 class Adding extends StatefulWidget {
   @override
@@ -28,26 +25,29 @@ class _AddingState extends State<Adding> {
     controller3.dispose();
     super.dispose();
   }
-  void DialogShowing(BuildContext context)
-  {
+
+  // ignore: non_constant_identifier_names
+  void DialogShowing(BuildContext context) {
+    // ignore: non_constant_identifier_names
     Widget OK = FlatButton(
       child: Text('OK'),
-      onPressed: (){Navigator.pop(context);},
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
-    showDialog(context: context,builder: (context) => AlertDialog(
-      title: Text('This word has exists!'),
-      actions: <Widget>[OK],
-    ));
-
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text('This word has exists!'),
+              actions: <Widget>[OK],
+            ));
   }
-  Future<bool> checkExistence(String val) async
-  {
+
+  Future<bool> checkExistence(String val) async {
     List<Vocab> list = await DBInteract.getAllVocabs();
-    for(final node in list)
-      {
-        if(node.word == val)
-          return true;
-      }
+    for (final node in list) {
+      if (node.word == val) return true;
+    }
     return false;
   }
 
@@ -79,10 +79,9 @@ class _AddingState extends State<Adding> {
                     child: TextFormField(
                       style: TextStyle(fontWeight: FontWeight.w600),
                       validator: (value) {
-                        if (value.isEmpty)
-                          return 'This field is required';
-                          return null;
-                        },
+                        if (value.isEmpty) return 'This field is required';
+                        return null;
+                      },
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.red),
@@ -168,18 +167,17 @@ class _AddingState extends State<Adding> {
                             label: Text('Save result'),
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                bool check = await checkExistence(
-                                    controller1.text);
+                                bool check =
+                                    await checkExistence(controller1.text);
                                 if (check == true) {
                                   print('True');
                                   DialogShowing(context);
-                                }
-                                else {
+                                } else {
                                   Vocab nw = Vocab(
                                       word: controller1.text,
                                       meaning: controller2.text,
                                       sentence: controller3.text);
-                                  createTodo(nw);
+                                  createNewVocabModel(nw);
                                   setState(() {
                                     controller1.clear();
                                     controller2.clear();
@@ -190,7 +188,6 @@ class _AddingState extends State<Adding> {
                                   ));
                                 } //end else
                               }
-
                             },
                           ),
                         ),

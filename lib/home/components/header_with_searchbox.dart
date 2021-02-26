@@ -1,10 +1,5 @@
-import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:flutter/material.dart';
-import'package:ForLingo/models/vocab.dart';
-import 'package:ForLingo/vocabs_interface.dart' as vs;
-import 'package:ForLingo/home/components/word/Editor.dart';
-import 'package:ForLingo/global.dart' as globals;
-
+import 'package:ForLingo/models/vocabs_interface.dart' as vs;
 
 class HeaderWithSearchBox extends StatefulWidget {
   final Function sethomestate;
@@ -22,38 +17,26 @@ class HeaderWithSearchBox extends StatefulWidget {
 class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
   TextEditingController controller1 = TextEditingController();
   @override
-  void initState()
-  {
+  void initState() {
     super.initState();
     print('initstate');
   }
+
   @override
   Widget build(BuildContext context) {
-    if(vs.handleSearch == true) {
+    if (vs.handleSearch == true) {
       controller1.clear();
       vs.handleSearch = false;
     }
     return Container(
-      height: widget.size.height * 0.12,
-      child: Stack(
-        children: <Widget>[
+        height: widget.size.height * 0.12,
+        child: Stack(children: <Widget>[
           Container(
             padding: EdgeInsets.only(
               left: 20.0,
               right: 20.0,
               bottom: 56,
             ),
-            /*
-            height: size.height * 0.2 - 100,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(36),
-                bottomRight: Radius.circular(36),
-              ),
-            ),
-
-             */
           ),
           Container(
             alignment: Alignment.center,
@@ -85,7 +68,7 @@ class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
                       focusedBorder: InputBorder.none,
                     ),
                     controller: controller1,
-                    onChanged: (val){
+                    onChanged: (val) {
                       widget.sethomestate(val);
                     },
                   ),
@@ -97,9 +80,7 @@ class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
               ],
             ),
           )
-        ]
-      )
-    );
+        ]));
   }
 }
 
@@ -133,77 +114,4 @@ class PersistentHeader extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
     return true;
   }
-
 }
-
-//  Widget searchBar  ()
-//  {
-//    GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
-//
-//    AutoCompleteTextField searchTextField = AutoCompleteTextField();
-//
-//    TextEditingController controller = new TextEditingController();
-//    return Row(
-//      children: <Widget>[
-//        Expanded(
-//          child: searchTextField =  AutoCompleteTextField<String>(
-//            decoration: InputDecoration(
-//              hintText: "Search word",
-//              hintStyle: TextStyle(
-//                color: Colors.blue.withOpacity(0.5),
-//              ),
-//              enabledBorder: InputBorder.none,
-//              focusedBorder: InputBorder.none,
-//            ),
-//            itemSubmitted: (item) async {
-//              Vocab w = await DBInteract.getVocabfromString(item);
-//              Navigator.push(
-//                context, MaterialPageRoute(builder: (context) => Editor(w)
-//             )).then((val)=>
-//              setState(() {searchTextField.clear();
-//              widget.sethomestate();
-//              _loadData();}
-//              ));
-//            },
-//              clearOnSubmit: false,
-//              key: key,
-//              suggestions: list,
-//              itemBuilder: (context, item) {
-//                return Container(
-//                  color: Colors.blue[900],
-//                  padding: EdgeInsets.fromLTRB(10, 2, 10, 0),
-//                  height: 40,
-//                    width: 50,
-//                    child:Column(
-//                      crossAxisAlignment: CrossAxisAlignment.start,
-//                      children: [
-//                        Text(item,
-//                          style: TextStyle(
-//                            color: Colors.white,
-//                            fontWeight: FontWeight.w400,
-//                              fontSize: 16.0
-//                          ),),
-//                        Divider( color: Colors.white,)
-//                      ],
-//                    ),
-//                  );
-//              },
-//              itemSorter: (a, b) {
-//                return a.compareTo(b);
-//              },
-//              itemFilter: (item, query) {
-//                return item
-//                    .toLowerCase()
-//                    .startsWith(query.toLowerCase());
-//              }
-//
-//          ),
-//        ),
-//        Icon(
-//          Icons.search,
-//          color: Colors.blue,
-//        ),
-//      ],
-//    );
-//  }
-

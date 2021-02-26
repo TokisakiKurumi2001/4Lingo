@@ -59,6 +59,12 @@ class MyBottomNavBar extends StatelessWidget {
               //Statistic popup
             },
           ),
+          // IconButton(
+          //   icon: Icon(Icons.accessibility),
+          //   onPressed: () {
+          //     notify.notifyCenter.listAll();
+          //   },
+          // ),
         ],
       ),
     );

@@ -2,9 +2,9 @@
  *  This file create a database called `lingo`
  *  In this db, there is a table called `words`
  *  Having the following schema is a must:
- *  id             | word     | meaning  | sentence
- *  INTEGER        | TEXT     | TEXT     | TEXT
- *  PRIMARY KEY    | NOT NULL | NOT NULL | NOT NULL
+ *  id             | word     | meaning  | sentence | createdAt | updatedAt | next     | class    | level    | update_notify_date
+ *  INTEGER        | TEXT     | TEXT     | TEXT     | TEXT      | TEXT      | TEXT     | INTEGER  | INTEGER  | TEXT
+ *  PRIMARY KEY    | NOT NULL | NOT NULL | NOT NULL | NOT NULL  | NOT NULL  | NOT NULL | NOT NULL | NOT NULL | NOT NULL
  */
 
 import 'dart:io';
@@ -21,6 +21,10 @@ class DatabaseCreator {
   static const sentence = 'sentence';
   static const createdAt = 'createdAt';
   static const updatedAt = 'updatedAt';
+  static const next = 'next';
+  static const group = 'class';
+  static const level = 'level';
+  static const updateNotifyDate = 'update_notify_date';
 
   static void databaseLog(String functionName, String sql,
       [List<Map<String, dynamic>> selectQueryResult,
@@ -47,7 +51,11 @@ class DatabaseCreator {
       $meaning TEXT,
       $sentence TEXT,
       $createdAt TEXT,
-      $updatedAt TEXT
+      $updatedAt TEXT,
+      $next TEXT,
+      $group INTEGER,
+      $level INTEGER,
+      $updateNotifyDate TEXT
     )
     ''';
     await db.execute(sql);

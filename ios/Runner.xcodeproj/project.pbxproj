@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -132,7 +132,6 @@
 				2678BE8AC75EB4E3F99BBE36 /* Pods-Runner.release.xcconfig */,
 				2FE4EF2B28454BFCDC613635 /* Pods-Runner.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -381,6 +380,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = TheInfinity.ForLingo;
 				PRODUCT_NAME = Runner;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -513,6 +513,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = TheInfinity.ForLingo;
 				PRODUCT_NAME = Runner;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -540,6 +541,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = TheInfinity.ForLingo;
 				PRODUCT_NAME = Runner;
 				VERSIONING_SYSTEM = "apple-generic";
