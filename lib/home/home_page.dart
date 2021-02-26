@@ -1,11 +1,10 @@
 import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:ForLingo/home/components/word/wordpage.dart';
 import 'package:flutter/material.dart';
-//import 'components/body.dart';
 import 'components/header_with_searchbox.dart';
 import 'components/bottom_nav_bar/bottom_nav_bar.dart';
 import 'components/word/add.dart';
-import 'package:ForLingo/vocabs_interface.dart'as vs;
+import 'package:ForLingo/models/vocabs_interface.dart' as vs;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,19 +13,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState()
-  {
+  void initState() {
     super.initState();
     vs.future = DBInteract.getAllVocabs();
     print('first home state');
   }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
-      //appBar: buildAppBar(),
-      //body: Body(),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -50,30 +46,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          // SliverAppBar(
-          //   toolbarHeight: 80,
-          //   pinned: true,
-          //   backgroundColor: Colors.white,
-          //   automaticallyImplyLeading: false,
-          //   actions: <Widget>[
-          //     Container(),
-          //   ],
-          //   title: HeaderWithSearchBox(size: size),
-          // ),
           SliverPersistentHeader(
             pinned: true,
             delegate: PersistentHeader(
-              widget: HeaderWithSearchBox(size: size,sethomestate: (String val){
-                if(val == '') {
-                  setState(() {
-                    vs.future = DBInteract.getAllVocabs();
-                  });
-                }
-                else {
-                  setState(() {
-                    vs.future = DBInteract.getPattern(val);
-                  });
-                }
+              widget: HeaderWithSearchBox(
+                size: size,
+                sethomestate: (String val) {
+                  if (val == '') {
+                    setState(() {
+                      vs.future = DBInteract.getAllVocabs();
+                    });
+                  } else {
+                    setState(() {
+                      vs.future = DBInteract.getPattern(val);
+                    });
+                  }
                 },
               ),
             ),
@@ -83,9 +70,13 @@ class _HomeScreenState extends State<HomeScreen> {
               [
                 Column(
                   children: <Widget>[
-                    Word(sethomestate: (){setState(() {
-                      vs.future = DBInteract.getAllVocabs();
-                    });},),
+                    Word(
+                      sethomestate: () {
+                        setState(() {
+                          vs.future = DBInteract.getAllVocabs();
+                        });
+                      },
+                    ),
                   ],
                 ),
               ],
@@ -100,7 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Adding()))
-                .then((value) => setState(() {vs.future = DBInteract.getAllVocabs();}));
+                .then((value) => setState(() {
+                      vs.future = DBInteract.getAllVocabs();
+                    }));
           },
           child: Icon(
             Icons.add,
@@ -155,20 +148,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-/*
-  AppBar buildAppBar() {
-    return AppBar(
-      centerTitle: true,
-      elevation: 0,
-      title: Text(
-        '4Lingo',
-        style: TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-   */
 }

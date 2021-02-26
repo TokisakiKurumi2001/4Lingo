@@ -19,18 +19,6 @@ class DBInteract {
     return vocabs;
   }
 
-//  static Future<bool> checkExistence(String word) async
-//  {
-//      final sql = '''
-//    SELECT * FROM ${DatabaseCreator.tableName} where EXISTS(SELECT * FROM ${DatabaseCreator.tableName}
-//    WHERE ${DatabaseCreator.word} = $word)
-//    ''';
-//      final data = await db.query(sql);
-//      if (data.isEmpty)
-//        return false;
-//      return true;
-//
-//  }
   static Future<Vocab> getVocab(int id) async {
     final sql = '''
     SELECT * FROM ${DatabaseCreator.tableName}
@@ -40,6 +28,31 @@ class DBInteract {
     final vocab = Vocab.fromJson(data[0]);
 
     return vocab;
+  }
+
+  static Future<List<Vocab>> getVocabWithCondition(
+      int columnCond, String condition) async {
+    String column;
+    if (columnCond == 1) {
+      column = DatabaseCreator.next;
+    } else if (columnCond == 2) {
+      column = DatabaseCreator.updateNotifyDate;
+    }
+    final sql = '''
+    SELECT * FROM ${DatabaseCreator.tableName} WHERE $column = "$condition"
+    ''';
+    final data = await db.rawQuery(sql);
+    List<Vocab> vocabs = List();
+
+    for (final node in data) {
+      final todo = Vocab.fromJson(node);
+      vocabs.add(todo);
+    }
+
+    DatabaseCreator.databaseLog(
+        "Select words where $column = \"$condition\"", sql, data);
+
+    return vocabs;
   }
 
   static Future<List<Vocab>> getPattern(String query) async {
@@ -66,9 +79,13 @@ class DBInteract {
       ${DatabaseCreator.meaning},
       ${DatabaseCreator.sentence},
       ${DatabaseCreator.createdAt},
-      ${DatabaseCreator.updatedAt}
+      ${DatabaseCreator.updatedAt},
+      ${DatabaseCreator.next},
+      ${DatabaseCreator.group},
+      ${DatabaseCreator.level},
+      ${DatabaseCreator.updateNotifyDate}
     ) VALUES
-    (?,?,?,?,?,?)
+    (?,?,?,?,?,?,?,?,?,?)
     ''';
     List<dynamic> params = [
       myVocab.id,
@@ -76,7 +93,11 @@ class DBInteract {
       myVocab.meaning,
       myVocab.sentence,
       myVocab.createdAt,
-      myVocab.updatedAt
+      myVocab.updatedAt,
+      myVocab.next,
+      myVocab.group,
+      myVocab.level,
+      myVocab.updateNotifyDate
     ];
     final result = await db.rawInsert(sql, params);
     DatabaseCreator.databaseLog('Add new vocab', sql, null, result, params);
@@ -109,22 +130,29 @@ class DBInteract {
     DatabaseCreator.databaseLog('Update vocab', sql, null, result, params);
   }
 
+  static Future<void> updateNotifyVocab(Vocab newVocab) async {
+    final sql = '''
+    UPDATE ${DatabaseCreator.tableName}
+    SET ${DatabaseCreator.next} = ?, ${DatabaseCreator.group} = ?, ${DatabaseCreator.level} = ?, ${DatabaseCreator.updateNotifyDate} = ?
+    WHERE ${DatabaseCreator.id} = ?
+    ''';
+    List<dynamic> params = [
+      newVocab.next,
+      newVocab.group,
+      newVocab.level,
+      newVocab.updateNotifyDate,
+      newVocab.id
+    ];
+    final result = await db.rawUpdate(sql, params);
+    DatabaseCreator.databaseLog('Update vocab', sql, null, result, params);
+  }
+
   static Future<int> todosCount() async {
     final data = await db
         .rawQuery('''SELECT MAX(id) FROM ${DatabaseCreator.tableName}''');
 
     int count = data[0].values.elementAt(0);
-    int idForNewItem = count == null ? 0 : count;
-    return idForNewItem;
+    int numberOfItems = count == null ? 0 : count;
+    return numberOfItems;
   }
 }
-
-//static Future<Vocab> getVocabfromString(String s) async {
-//final sql = '''
-//    SELECT * FROM ${DatabaseCreator.tableName}
-//    WHERE ${DatabaseCreator.word} = '${s}'
-//    ''';
-//final data = await db.rawQuery(sql);
-//final vocab = Vocab.fromJson(data[0]);
-//return vocab;
-//}

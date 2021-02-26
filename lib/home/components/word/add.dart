@@ -1,7 +1,7 @@
 import 'package:ForLingo/db/interact_with_db.dart';
 import 'package:flutter/material.dart';
 import 'package:ForLingo/models/vocab.dart';
-import 'package:ForLingo/vocabs_interface.dart';
+import 'package:ForLingo/models/vocabs_interface.dart';
 
 class Adding extends StatefulWidget {
   @override
@@ -177,7 +177,7 @@ class _AddingState extends State<Adding> {
                                       word: controller1.text,
                                       meaning: controller2.text,
                                       sentence: controller3.text);
-                                  createTodo(nw);
+                                  createNewVocabModel(nw);
                                   setState(() {
                                     controller1.clear();
                                     controller2.clear();
