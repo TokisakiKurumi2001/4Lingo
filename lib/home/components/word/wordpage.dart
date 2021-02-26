@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'wordcard.dart';
 import 'package:ForLingo/models/vocab.dart';
 import 'Editor.dart';
-import 'package:ForLingo/vocabs_interface.dart' as vs;
+import 'package:ForLingo/models/vocabs_interface.dart' as vs;
 
 class Word extends StatefulWidget {
   final Function sethomestate;
@@ -15,13 +15,11 @@ class _WordState extends State<Word> {
   @override
   void initState() {
     super.initState();
-    //vs.future = DBInteract.getAllVocabs();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        //child: showingList(),
         child: FutureBuilder<List<Vocab>>(
             future: vs.future,
             builder: (context, snapshot) {
@@ -41,7 +39,7 @@ class _WordState extends State<Word> {
                         .map((w) => WordCard(
                               w: w,
                               delete: () {
-                                vs.deleteTodo(w);
+                                vs.deleteVocabModel(w);
                                 widget.sethomestate();
                               },
                               movetoeditor: () {
