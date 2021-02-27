@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'bookmark/bookmark.dart';
 import 'bookmark/statics.dart';
-import 'package:ForLingo/notification/notify.dart' as notify;
 
 class MyBottomNavBar extends StatelessWidget {
   const MyBottomNavBar({

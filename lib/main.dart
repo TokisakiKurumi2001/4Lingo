@@ -8,10 +8,12 @@ import 'package:ForLingo/db/database_creator.dart';
 import 'package:ForLingo/notification/notify.dart' as notify;
 import 'package:ForLingo/home/components/bottom_nav_bar/bookmark/bookmark.dart';
 import 'package:ForLingo/models/vocabs_interface.dart' as vs;
+import 'package:ForLingo/db/statistic_database_creator.dart';
 
 String initRoute = '/';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await StatDBCreator().initDB();
   await DatabaseCreator().initDB();
   bool goThroughNotification =
       await notify.notifyCenter.appLaunchNotification();

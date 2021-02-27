@@ -14,6 +14,11 @@ class Vocab {
   String updateNotifyDate;
   //==================
 
+  //==================
+  //NOTE: statistic field
+  int isRemember;
+  //==================
+
   Vocab({this.word, this.meaning, this.sentence});
   Vocab.fromJson(Map<String, dynamic> map) {
     this.id = map[DatabaseCreator.id];

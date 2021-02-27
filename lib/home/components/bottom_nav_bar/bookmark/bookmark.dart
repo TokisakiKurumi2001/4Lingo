@@ -5,6 +5,7 @@ import 'package:ForLingo/models/vocab.dart';
 import 'package:ForLingo/models/vocabs_interface.dart' as vs;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ForLingo/notification/time_manager.dart';
+import 'package:ForLingo/db/statistic_database_helper.dart';
 
 class FlashCardFuture extends StatefulWidget {
   static String routeName = '/bookmark';
@@ -104,16 +105,81 @@ class _FlashCardState extends State<FlashCard> {
     wordlist = widget.myWordlist;
     print("Wordlist: $wordlist");
     totalWords = wordlist.length;
+    resetIsRemember();
     if (totalWords != 0) {
       // this mean that user have some words to learn
       flashcard = FlashCardContent(
         currWords: wordlist[currWordIndex],
         key: ValueKey(diffKey),
       );
+      updateDataBase(totalWords);
     } else {
       flashcard = Text('Please add some words');
+      updateDataBase(0);
     }
     firstTime = widget.firstVisited;
+  }
+
+  // this method marks all the vocabs as 'non checked'
+  void resetIsRemember() {
+    for (int i = 0; i < wordlist.length; i++) {
+      wordlist[i].isRemember = 0;
+    }
+  }
+
+  // mark the word at current index as checked
+  void setIsRemember() {
+    setState(() {
+      wordlist[currWordIndex].isRemember = 1;
+    });
+  }
+
+  // this function update to the statistics database the number of words have to learn today
+  Future<void> updateDataBase(int value) async {
+    DateTime currentTime = DateTime.now();
+    int week;
+    int day = currentTime.day;
+    if (day <= 7)
+      week = 1;
+    else if (day <= 14)
+      week = 2;
+    else if (day <= 21)
+      week = 3;
+    else if (day <= 28)
+      week = 4;
+    else
+      week = 5;
+    await StatDBInteract.upDateTotalVocab(0, currentTime.weekday, value);
+    await StatDBInteract.upDateTotalVocab(1, week, value);
+    await StatDBInteract.upDateTotalVocab(2, currentTime.month, value);
+    await StatDBInteract.upDateTotalVocab(3, 1, value);
+    return;
+  }
+
+  Future<void> updateDataBaseWordRem(int isRem) async {
+    //if the word at current index has been marked as "checked", do nothing. Else update database
+    if (isRem == 1) {
+      print('Do nothing!');
+    } else {
+      DateTime currentTime = DateTime.now();
+      int week;
+      int day = currentTime.day;
+      if (day <= 7)
+        week = 1;
+      else if (day <= 14)
+        week = 2;
+      else if (day <= 21)
+        week = 3;
+      else if (day <= 28)
+        week = 4;
+      else
+        week = 5;
+      await StatDBInteract.upDateVocabRem(0, currentTime.weekday);
+      await StatDBInteract.upDateVocabRem(1, week);
+      await StatDBInteract.upDateVocabRem(2, currentTime.month);
+      await StatDBInteract.upDateVocabRem(3, 1);
+    }
+    return;
   }
 
   // this function is called to change the diffKey so that
@@ -274,6 +340,7 @@ class _FlashCardState extends State<FlashCard> {
                           color: Colors.red,
                           onPressed: () {
                             if (wordlist.length != 0) {
+                              setIsRemember();
                               updateNotifyDateUserInput(
                                   answerCorrect: false,
                                   vocab: wordlist[currWordIndex]);
@@ -292,8 +359,13 @@ class _FlashCardState extends State<FlashCard> {
                           child: Icon(Icons.check, size: 30.0),
                           textColor: Colors.white,
                           color: Colors.green,
-                          onPressed: () {
+                          onPressed: () async {
                             if (wordlist.length != 0) {
+                              if (firstTime) {
+                                await updateDataBaseWordRem(
+                                    wordlist[currWordIndex].isRemember);
+                                setIsRemember();
+                              }
                               updateNotifyDateUserInput(
                                   answerCorrect: true,
                                   vocab: wordlist[currWordIndex]);
