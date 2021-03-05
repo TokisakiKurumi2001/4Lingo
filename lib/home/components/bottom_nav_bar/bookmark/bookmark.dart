@@ -106,18 +106,19 @@ class _FlashCardState extends State<FlashCard> {
     print("Wordlist: $wordlist");
     totalWords = wordlist.length;
     resetIsRemember();
+    firstTime = widget.firstVisited;
     if (totalWords != 0) {
       // this mean that user have some words to learn
       flashcard = FlashCardContent(
         currWords: wordlist[currWordIndex],
         key: ValueKey(diffKey),
       );
-      updateDataBase(totalWords);
+      if (firstTime) {
+        updateDataBase(totalWords);
+      }
     } else {
       flashcard = Text('Please add some words');
-      updateDataBase(0);
     }
-    firstTime = widget.firstVisited;
   }
 
   // this method marks all the vocabs as 'non checked'
